@@ -34,6 +34,5 @@ jobs:
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |          
-          dotnet nuget push src/CodeOfChaos.CliArgsParser.Contracts/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push src/CodeOfChaos.CliArgsParser/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push src/CodeOfChaos.CliArgsParser.Library/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate

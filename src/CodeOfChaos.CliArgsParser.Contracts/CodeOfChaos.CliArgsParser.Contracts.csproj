@@ -5,20 +5,20 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
-        <IsPackable>true</IsPackable>
-        <PackageId>CodeOfChaos.CliArgsParser.Contracts</PackageId> <!-- Main package name -->
-        <Version>2.2.7</Version> <!-- Package version -->
-        <Authors>Anna Sas</Authors>
-        <Description>CliArgsParser is a library built around Dependency Injection to allow you to create CLI tools with ease</Description>
-        <PackageProjectUrl>https://github.com/code-of-chaos/cs-code_of_chaos-cli_args_parser/</PackageProjectUrl>
-        <PackageTags>cli args cliparser input argsparser</PackageTags>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <IncludeSymbols>true</IncludeSymbols>
-        <DebugType>embedded</DebugType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+<!--        <IsPackable>true</IsPackable>-->
+<!--        <PackageId>CodeOfChaos.CliArgsParser.Contracts</PackageId> &lt;!&ndash; Main package name &ndash;&gt;-->
+<!--        <Version>2.2.7</Version> &lt;!&ndash; Package version &ndash;&gt;-->
+<!--        <Authors>Anna Sas</Authors>-->
+<!--        <Description>CliArgsParser is a library built around Dependency Injection to allow you to create CLI tools with ease</Description>-->
+<!--        <PackageProjectUrl>https://github.com/code-of-chaos/cs-code_of_chaos-cli_args_parser/</PackageProjectUrl>-->
+<!--        <PackageTags>cli args cliparser input argsparser</PackageTags>-->
+<!--        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>-->
+<!--        <PublishRepositoryUrl>true</PublishRepositoryUrl>-->
+<!--        <IncludeSymbols>true</IncludeSymbols>-->
+<!--        <DebugType>embedded</DebugType>-->
+<!--        <PackageLicenseFile>LICENSE</PackageLicenseFile>-->
+<!--        <PackageReadmeFile>README.md</PackageReadmeFile>-->
+<!--        <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
     </PropertyGroup>
 
     <ItemGroup>
