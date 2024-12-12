@@ -2,12 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
+        
         <IsPackable>true</IsPackable>
-        <PackageId>CodeOfChaos.CliArgsParser.Library</PackageId> <!-- Main package name -->
+        <PackageId>CodeOfChaos.CliArgsParser</PackageId> <!-- Main package name -->
         <Version>2.2.7</Version> <!-- Package version -->
         <Authors>Anna Sas</Authors>
         <Description>CliArgsParser is a library built around Dependency Injection to allow you to create CLI tools with ease</Description>
@@ -21,14 +20,18 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-
+    
     <ItemGroup>
-      <PackageReference Include="AterraEngine.Unions" Version="2.5.0" />
-      <PackageReference Include="CodeOfChaos.Ansi" Version="0.1.7" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CodeOfChaos.CliArgsParser.Contracts\CodeOfChaos.CliArgsParser.Contracts.csproj" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CodeOfChaos.CliArgsParser.Contracts\CodeOfChaos.CliArgsParser.Contracts.csproj" />
     </ItemGroup>
 
 </Project>
