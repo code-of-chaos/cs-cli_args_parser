@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8DD280D4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{AF1A203C-6EF1-440E-BB3C-55B1DBFE9C19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.CodeOfChaos.CliArgsParser.Library", "src\Tools.CodeOfChaos.CliArgsParser.Library\Tools.CodeOfChaos.CliArgsParser.Library.csproj", "{ADEADD97-0AFA-4D9E-970B-9FFB932949B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.CodeOfChaos.CliArgsParser", "src\Tools.CodeOfChaos.CliArgsParser\Tools.CodeOfChaos.CliArgsParser.csproj", "{ADEADD97-0AFA-4D9E-970B-9FFB932949B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,16 @@
+﻿{
+  "profiles": {
+    "Major Version Bump": {
+      "commandName": "Project",
+      "commandLineArgs": "bump --section=\"major\" --projects=\"CodeOfChaos.CliArgsParser.Library;\""
+    },
+    "Minor Version Bump": {
+      "commandName": "Project",
+      "commandLineArgs": "bump --section=\"minor\" --projects=\"CodeOfChaos.CliArgsParser.Library;\""
+    },
+    "Patch Version Bump": {
+      "commandName": "Project",
+      "commandLineArgs": "bump --section=\"patch\" --projects=\"CodeOfChaos.CliArgsParser.Library;\""
+    }
+  }
+}
