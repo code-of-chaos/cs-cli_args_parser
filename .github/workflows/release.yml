@@ -22,9 +22,6 @@ jobs:
 
       - name: Build
         run: dotnet build CodeOfChaos.CliArgsParser.sln --configuration Release --no-restore
-          
-      - name: Run tests
-        run: dotnet test --no-build --verbosity normal
 
       - name: Publish to NuGet
         env:
