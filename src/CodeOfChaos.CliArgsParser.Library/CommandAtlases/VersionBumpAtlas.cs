@@ -49,18 +49,32 @@ public class VersionBumpAtlas : ICommandAtlas {
     private static async Task<SuccessOrFailure> TryCreateGitTag(string updatedVersion) {
         var gitTagInfo = new ProcessStartInfo("git", "tag v" + updatedVersion) {
             RedirectStandardOutput = true,
+            RedirectStandardError = true, // Capture error messages
             UseShellExecute = false,
             CreateNoWindow = true
         };
 
         using Process? gitTagProcess = Process.Start(gitTagInfo);
-        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
-        await gitTagProcess.WaitForExitAsync();
         
-        if (gitTagProcess.ExitCode != 0) return "Git Tagging failed";
+        if (gitTagProcess == null) {
+            return "Failed to start the Git process.";
+        }
+
+        // Read both output and error streams
+        string output = await gitTagProcess.StandardOutput.ReadToEndAsync();
+        string error = await gitTagProcess.StandardError.ReadToEndAsync();
+
+        // Ensure the process finishes
+        await gitTagProcess.WaitForExitAsync();
+
+        if (gitTagProcess.ExitCode != 0) {
+            return $"Git Tagging failed: {error} {output}";
+        }
+
         return new Success();
 
     }
+    
     private static async Task<SuccessOrFailure> TryCreateGitCommit(string updatedVersion) {
 
         var gitCommitInfo = new ProcessStartInfo("git", $"commit -am \"VersionBump : v{updatedVersion}\"") {
