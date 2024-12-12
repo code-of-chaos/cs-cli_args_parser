@@ -17,7 +17,7 @@ namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases;
 // ReSharper disable once UnusedType.Global
 public class VersionBumpAtlas : ICommandAtlas {
     [Command<VersionBumpParameters>("bump")]
-    public static async Task VersionBumpCommand(VersionBumpParameters args) {
+    public async Task VersionBumpCommand(VersionBumpParameters args) {
         Console.WriteLine(Fore("orange", "Starting execution 'VersionBump' "));
         
         Console.WriteLine(Fore("white","Bumping version..."));
