@@ -2,15 +2,15 @@
   "profiles": {
     "Major Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "bump -section=\"major\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Contracts;CodeOfChaos.CliArgsParser.Library;\""
+      "commandLineArgs": "bump -section=\"major\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;\""
     },
     "Minor Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "bump -section=\"minor\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Contracts;CodeOfChaos.CliArgsParser.Library;\""
+      "commandLineArgs": "bump -section=\"minor\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;\""
     },
     "Patch Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "bump -section=\"patch\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Contracts;CodeOfChaos.CliArgsParser.Library;\""
+      "commandLineArgs": "bump -section=\"patch\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;\""
     }
   }
 }
