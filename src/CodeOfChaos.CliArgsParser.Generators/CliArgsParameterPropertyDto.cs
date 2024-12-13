@@ -39,6 +39,7 @@ public struct CliArgsParameterPropertyDto() {
         AttributeData parameterAttribute = attributes.FirstOrDefault(attr => attr.AttributeClass!.Name.ToString().Contains("CliArgsParameter"))!;
         AttributeData descriptionAttribute = attributes.FirstOrDefault(attr => attr.AttributeClass!.Name.ToString().Contains("CliArgsDescription"))!;
         
+        // Get the actual values from the symbol
         string name = parameterAttribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
         string shortName = parameterAttribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ?? string.Empty;
         bool isFlag = parameterAttribute.ConstructorArguments.ElementAtOrDefault(2).Value as int? == 1;

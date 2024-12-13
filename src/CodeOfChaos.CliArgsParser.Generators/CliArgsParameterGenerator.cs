@@ -50,7 +50,10 @@ public class CliArgsParameterGenerator : IIncrementalGenerator{
         CliArgsParameterPropertyDto[] properties = structSyntax.Members
             .OfType<PropertyDeclarationSyntax>()
             .Where(prop => prop.AttributeLists.Any(attrlist => attrlist.Attributes.Any(attr => attr.Name.ToString().Contains("CliArgsParameter"))))
-            .Select(syntax => CliArgsParameterPropertyDto.FromPropertyDeclarationSyntax(syntax, ModelExtensions.GetDeclaredSymbol(context.SemanticModel, syntax)!))
+            .Select(syntax => CliArgsParameterPropertyDto.FromPropertyDeclarationSyntax(
+                syntax,
+                ModelExtensions.GetDeclaredSymbol(context.SemanticModel, syntax)!) // Try (or raise exception) to get symbol
+            )
             .ToArray();
 
         return new CliArgsParameterStructDto {
