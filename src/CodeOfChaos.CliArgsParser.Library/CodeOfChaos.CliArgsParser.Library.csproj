@@ -33,8 +33,4 @@
       <PackageReference Include="CodeOfChaos.Ansi" Version="0.1.7" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\CodeOfChaos.CliArgsParser.Contracts\CodeOfChaos.CliArgsParser.Contracts.csproj" />
-    </ItemGroup>
-
 </Project>
