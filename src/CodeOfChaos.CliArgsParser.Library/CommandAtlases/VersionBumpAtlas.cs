@@ -47,7 +47,7 @@ public class VersionBumpAtlas : ICommandAtlas {
     }
     
     private static async Task<SuccessOrFailure> TryCreateGitTag(string updatedVersion) {
-        var gitTagInfo = new ProcessStartInfo("git", "tag v" + updatedVersion) {
+        ProcessStartInfo gitTagInfo = new ProcessStartInfo("git", "tag v" + updatedVersion) {
             RedirectStandardOutput = true,
             RedirectStandardError = true, // Capture error messages
             UseShellExecute = false,
@@ -77,7 +77,7 @@ public class VersionBumpAtlas : ICommandAtlas {
     
     private static async Task<SuccessOrFailure> TryCreateGitCommit(string updatedVersion) {
 
-        var gitCommitInfo = new ProcessStartInfo("git", $"commit -am \"VersionBump : v{updatedVersion}\"") {
+        ProcessStartInfo gitCommitInfo = new ProcessStartInfo("git", $"commit -am \"VersionBump : v{updatedVersion}\"") {
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true
@@ -108,7 +108,7 @@ public class VersionBumpAtlas : ICommandAtlas {
             }
 
             XDocument document;
-            await using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true)) {
+            await using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true)) {
                 document = await XDocument.LoadAsync(stream, LoadOptions.PreserveWhitespace, CancellationToken.None);
             }
 
@@ -148,14 +148,14 @@ public class VersionBumpAtlas : ICommandAtlas {
 
             versionElement.Value = versionToReturn ??= string.Join(".", versionParts);
 
-            var settings = new XmlWriterSettings {
+            XmlWriterSettings settings = new XmlWriterSettings {
                 Indent = true,
                 IndentChars = "    ", 
                 Async = true,
                 OmitXmlDeclaration = true,
             };
-            await using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) {
-                await using var writer = XmlWriter.Create(stream, settings);
+            await using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) {
+                await using XmlWriter writer = XmlWriter.Create(stream, settings);
                 document.Save(writer);
             }
             

@@ -36,28 +36,8 @@ public readonly partial struct CommandParameters : IParameters {
     [CliArgsParameter("test-other-optional", "too")]
     [CliArgsDescription("This is a test parameter")]
     public string? OptionalTestOtherValue { get; init; }
-
-
+    
     [CliArgsParameter("test-other-optional-else", "too")]
     [CliArgsDescription("This is a test parameter")]
     public string[] OptionalTestOtherElseValue { get; init; }
-}
-
-// Auto generated
-// public readonly partial struct CommandParameters() {
-//     public static CommandParameters FromRegistry(CommandInputRegistry registry) =>
-//         new() {
-//             TestValue = registry.GetParameter<string>("test"),
-//             Verbose = registry.GetParameter<bool>("verbose"),
-//             OptionalTestValue = registry.GetOptionalParameter<string>("test-optional") ?? "test",
-//             OptionalTestOtherValue = registry.GetOptionalParameter<string>("test-optional") ?? default,
-//             OptionalTestOtherElseValue = registry.GetOptionalParameter<string[]>("test-other-optional-else") ?? [],
-//         };
-// }
-
-// Helper class to do a lot of the manipulation
-public class CommandInputRegistry {
-    public bool TryGetParameter<T>(string key, [NotNullWhen(true)] out T? value) => throw new NotImplementedException();
-    public T GetParameter<T>(string key) => throw new NotImplementedException();
-    public T? GetOptionalParameter<T>(string key) => default;
 }

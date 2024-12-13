@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeOfChaos.CliArgsParser.G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeOfChaos.CliArgsParser.Generators.Sample", "src\CodeOfChaos.CliArgsParser.Generators.Sample\CodeOfChaos.CliArgsParser.Generators.Sample.csproj", "{5791637A-68E9-4B82-9C2C-E295D0C3E94C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeOfChaos.CliArgsParser.Generators.Tests", "tests\CodeOfChaos.CliArgsParser.Generators.Tests\CodeOfChaos.CliArgsParser.Generators.Tests.csproj", "{7F648BA2-1067-4A15-9829-688606C7E8F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.CodeOfChaos.CliArgsParser.Generators", "tests\Tests.CodeOfChaos.CliArgsParser.Generators\Tests.CodeOfChaos.CliArgsParser.Generators.csproj", "{7F648BA2-1067-4A15-9829-688606C7E8F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
