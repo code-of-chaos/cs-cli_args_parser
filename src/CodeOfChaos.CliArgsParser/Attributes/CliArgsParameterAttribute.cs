@@ -10,7 +10,7 @@ public class CliArgsParameterAttribute(string name, string? shortName = null, Pa
 
 }
 
-public enum ParameterType : ulong {
+public enum ParameterType : uint {
     Value = 0,
     Flag = 1
 }

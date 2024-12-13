@@ -44,20 +44,20 @@ public readonly partial struct CommandParameters : IParameters {
 }
 
 // Auto generated
-public readonly partial struct CommandParameters() {
-    public static CommandParameters FromRegistry(CommandInputRegistry registry) =>
-        new() {
-            TestValue = registry.GetParameter<string>("test"),
-            Verbose = registry.GetParameter<bool>("verbose"),
-            OptionalTestValue = registry.GetOptionalParameter<string>("test-optional") ?? "test",
-            OptionalTestOtherValue = registry.GetOptionalParameter<string>("test-optional") ?? default,
-            OptionalTestOtherElseValue = registry.GetOptionalParameter<string[]>("test-other-optional-else") ?? [],
-        };
-}
+// public readonly partial struct CommandParameters() {
+//     public static CommandParameters FromRegistry(CommandInputRegistry registry) =>
+//         new() {
+//             TestValue = registry.GetParameter<string>("test"),
+//             Verbose = registry.GetParameter<bool>("verbose"),
+//             OptionalTestValue = registry.GetOptionalParameter<string>("test-optional") ?? "test",
+//             OptionalTestOtherValue = registry.GetOptionalParameter<string>("test-optional") ?? default,
+//             OptionalTestOtherElseValue = registry.GetOptionalParameter<string[]>("test-other-optional-else") ?? [],
+//         };
+// }
 
 // Helper class to do a lot of the manipulation
 public class CommandInputRegistry {
     public bool TryGetParameter<T>(string key, [NotNullWhen(true)] out T? value) => throw new NotImplementedException();
     public T GetParameter<T>(string key) => throw new NotImplementedException();
-    public T? GetOptionalParameter<T>(string key) => throw new NotImplementedException();
+    public T? GetOptionalParameter<T>(string key) => default;
 }
