@@ -1,11 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace CodeOfChaos.CliArgsParser.Attributes;
+namespace CodeOfChaos.CliArgsParser.Contracts;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[AttributeUsage(AttributeTargets.Class)]
-#pragma warning disable CS9113 // Parameter is unread.
-public class CliArgsCommandAttribute(string name) : Attribute;
-#pragma warning restore CS9113 // Parameter is unread.
+public interface ICommandInputRegistry {
+    
+}

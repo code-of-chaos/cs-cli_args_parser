@@ -4,6 +4,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CodeOfChaos.CliArgsParser.Generators;
@@ -14,6 +15,7 @@ namespace CodeOfChaos.CliArgsParser.Generators;
 public class CliArgsParameterStructDto {
     public bool IsPartial { get; private set; }
     public ISymbol Symbol { get; private set; } = null!;
+    public bool HasEmptyConstructor { get; private set; }
 
     public string ClassName { get; private set; } = null!;
     public string Namespace { get; private set; } = null!;
@@ -31,7 +33,8 @@ public class CliArgsParameterStructDto {
             .Where(prop => prop.AttributeLists.Any(attrs => attrs.Attributes.Any(attr => attr.Name.ToString().Contains("CliArgsParameter"))))
             .Select(syntax => CliArgsParameterPropertyDto.FromContext(context, syntax))
             .ToArray();
-
+        
+        bool hasEmptyConstructor = structSyntax.ParameterList?.Parameters.Count == 0;
         ValidateProperties(properties);
 
         return new CliArgsParameterStructDto {
@@ -40,6 +43,7 @@ public class CliArgsParameterStructDto {
             ClassName = structSymbol.Name,
             Namespace = structSymbol.ContainingNamespace.ToDisplayString(),
             PropertyDtos = properties,
+            HasEmptyConstructor = hasEmptyConstructor,
         };
     }
 
@@ -65,5 +69,10 @@ public class CliArgsParameterStructDto {
         foreach (CliArgsParameterPropertyDto property in duplicateShortNames) {
             property.SetInvalid("Duplicate parameter short name");
         }
+    }
+
+    public string ToStructDeclarationName () {
+        string constructor = HasEmptyConstructor ? string.Empty : "()";
+        return $"{ClassName}{constructor}";
     }
 }

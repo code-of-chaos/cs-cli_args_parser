@@ -39,5 +39,5 @@ public readonly partial struct CommandParameters : IParameters {
     
     [CliArgsParameter("test-other-optional-else", "too")]
     [CliArgsDescription("This is a test parameter")]
-    public string[] OptionalTestOtherElseValue { get; init; }
+    public string[] OptionalTestOtherElseValue { get; init; } = [];
 }

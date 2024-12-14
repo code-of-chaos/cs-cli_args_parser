@@ -21,7 +21,7 @@ public class CliArgsParameterPropertyDto {
     public string? Description { get; private set; }
     public bool IsFlag { get; private set; }
     public bool IsValid { get; private set; } = true;
-    public List<string> InvalidReason { get; private set; } = [];
+    public List<string> InvalidReason { get; } = [];
     
     public string PropertyDefaultValue { get; private set; } = null!;
     public TypeSyntax PropertyType { get; private set; } = null!; 
@@ -35,14 +35,14 @@ public class CliArgsParameterPropertyDto {
         IPropertySymbol propertySymbol = context.SemanticModel.GetDeclaredSymbol(propertySyntax)!;
         
         ImmutableArray<AttributeData> attributes = propertySymbol.GetAttributes();
-        AttributeData parameterAttribute = attributes.FirstOrDefault(attr => attr.AttributeClass!.Name.ToString().Contains("CliArgsParameter"))!;
-        AttributeData descriptionAttribute = attributes.FirstOrDefault(attr => attr.AttributeClass!.Name.ToString().Contains("CliArgsDescription"))!;
+        AttributeData? parameterAttribute = attributes.FirstOrDefault(attr => attr.AttributeClass?.Name.ToString().Contains("CliArgsParameter") == true);
+        AttributeData? descriptionAttribute = attributes.FirstOrDefault(attr => attr.AttributeClass?.Name.ToString().Contains("CliArgsDescription") == true);
         
         // Get the actual values from the symbol
-        string name = parameterAttribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
-        string shortName = parameterAttribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ?? string.Empty;
-        bool isFlag = parameterAttribute.ConstructorArguments.ElementAtOrDefault(2).Value as uint? == 1u;
-        string? description = descriptionAttribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString();
+        string name = parameterAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
+        string shortName = parameterAttribute?.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString() ?? string.Empty;
+        bool isFlag = parameterAttribute?.ConstructorArguments.ElementAtOrDefault(2).Value as uint? == 1u;
+        string? description = descriptionAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString();
         
         // Instead of having a lot of computer properties, just do the computation once,
         // to limit errors with parsing later on
