@@ -19,8 +19,9 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
 
     public readonly string ClassName = symbol.Name;
     public readonly string Namespace = symbol.ContainingNamespace.ToDisplayString();
-    
-    public readonly ITypeSymbol? GenericTypeArgument = (symbol as ITypeSymbol)?.AllInterfaces.FirstOrDefault(i => i.OriginalDefinition.ToDisplayString().EndsWith("ICommand<T>"))?.TypeArguments.FirstOrDefault();
+
+    private readonly ITypeSymbol? GenericTypeArgument = (symbol as ITypeSymbol)?.AllInterfaces.FirstOrDefault(i => i.OriginalDefinition.ToDisplayString().EndsWith("ICommand<T>"))?.TypeArguments.FirstOrDefault();
+    public string GenericTypeDisplayName => GenericTypeArgument?.ToDisplayString() ?? "UNDEFINED";
     private readonly AttributeData? _commandNameAttribute = symbol.GetAttributes().FirstOrDefault(attr => attr.AttributeClass?.Name.ToString().Contains("CliArgsCommand") == true);
     public string CommandName => 
         _commandNameAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() 
@@ -46,13 +47,21 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
     }
 
     public void ToCommandData(GeneratorStringBuilder builder) {
-        builder.AppendLine($"public CommandData CommandData => new CommandData(")
+        builder.AppendLine("public CommandData CommandData { get; } = new CommandData(")
             .Indent()
             .AppendLine($"\"{CommandName}\",")
             .AppendLine($"\"{Description}\",")
             .AppendLine($"typeof({symbol.ToDisplayString()})")
             .UnIndent()
             .AppendLine(");");
+    }
+
+    public void ToCommandInitialization(GeneratorStringBuilder builder) {
+        builder.AppendLine("public Task InitializeAsync(ICommandInputRegistry registry) {")
+            .Indent()
+            .AppendLine($"return ExecuteAsync({GenericTypeDisplayName}.FromRegistry(registry));")
+            .UnIndent()
+            .AppendLine("}");
     }
 
     public void ReportDiagnostics(SourceProductionContext context) {
