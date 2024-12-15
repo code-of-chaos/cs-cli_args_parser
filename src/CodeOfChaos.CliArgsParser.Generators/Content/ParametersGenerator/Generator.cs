@@ -45,7 +45,7 @@ public class Generator : IIncrementalGenerator{
     }
     
     private static void GenerateSources(SourceProductionContext context, (Compilation compilation, ImmutableArray<ParameterStructDto> data) source) {
-        IndentedStringBuilder builder = new();
+        GeneratorStringBuilder builder = new();
 
         foreach (ParameterStructDto dto in source.data) {
             // We can only report diagnostics in this context, so do it here!
