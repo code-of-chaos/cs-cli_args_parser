@@ -13,7 +13,7 @@ namespace CodeOfChaos.CliArgsParser.Generators.Sample;
 // ---------------------------------------------------------------------------------------------------------------------
 [CliArgsCommand("test")]
 [CliArgsDescription("This is a test command")]
-public partial class Command : ICommand<CommandParameters> {
+public partial class ExampleCommand : ICommand<CommandParameters> {
     public Task ExecuteAsync(CommandParameters parameters) {
         throw new NotImplementedException();
     }

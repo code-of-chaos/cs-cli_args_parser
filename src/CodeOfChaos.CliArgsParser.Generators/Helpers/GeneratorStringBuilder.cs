@@ -42,28 +42,9 @@ public class GeneratorStringBuilder(int paddingChars = 4){
         return this;
     }
     #endregion
-    #region Indent logic
-    // Because I'm nuts and overthink everything
-    private readonly Dictionary<int, string> _indentCache = new() {
-        { 0, string.Empty },
-        { 1, " " },
-        { 2, "  " },
-        { 3, "   " },
-        { 4, "    " },
-        { 5, "     " },
-        { 6, "      " },
-        { 7, "       " },
-        { 8, "        " },
-        { 9, "         " },
-    };
-    private string IndentString(int amount) {
-        if (_indentCache.TryGetValue(amount, out string? indent)) return indent;
-        indent = new string(' ', amount * _paddingChars);
-        _indentCache[amount] = indent; // Cache the result for future use
-        return indent;
-    }
-    #endregion
     #region Auto Indented methods
+    private string IndentString(int amount) => new(' ', amount * _paddingChars);
+    
     public GeneratorStringBuilder UnIndent() {
         IndentAmount--;
         return this;
