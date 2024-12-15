@@ -6,7 +6,7 @@ namespace CodeOfChaos.CliArgsParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class CommandInputRegistry {
+public class CommandInputRegistry {
     public T GetParameter<T>(string key) => throw new NotImplementedException();
     public T? GetOptionalParameter<T>(string key) => default;
 }

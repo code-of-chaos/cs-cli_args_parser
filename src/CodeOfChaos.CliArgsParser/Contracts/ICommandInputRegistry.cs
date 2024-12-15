@@ -7,5 +7,7 @@ namespace CodeOfChaos.CliArgsParser.Contracts;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ICommandInputRegistry {
-    
+
+    T GetParameter<T>(string key);
+    T? GetOptionalParameter<T>(string key);
 }

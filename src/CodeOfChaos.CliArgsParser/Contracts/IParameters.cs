@@ -7,5 +7,4 @@ namespace CodeOfChaos.CliArgsParser.Contracts;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IParameters {
-    
 }

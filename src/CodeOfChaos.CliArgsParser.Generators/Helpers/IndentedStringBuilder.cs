@@ -8,10 +8,10 @@ namespace CodeOfChaos.CliArgsParser.Generators.Helpers;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class IndentedStringBuilder {
+public class IndentedStringBuilder : IGeneratorStringBuilder{
     private readonly StringBuilder _stringBuilder = new();
     private int _indent;
-    public int Indent {
+    public int IndentAmount {
         get => _indent;
         private set => _indent = value <= 0 ? 0 : value;
     }
@@ -19,32 +19,38 @@ public class IndentedStringBuilder {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public IndentedStringBuilder Append(string text) {
-        _stringBuilder.AppendWithIndentation(Indent, text);
+    public IGeneratorStringBuilder Append(string text) {
+        _stringBuilder.AppendWithIndentation(IndentAmount, text);
         return this;
     }
     
-    public IndentedStringBuilder AppendLine(string text) {
-        _stringBuilder.AppendLineWithIndentation(Indent, text);
+    public IGeneratorStringBuilder AppendLine(string text) {
+        _stringBuilder.AppendLineWithIndentation(IndentAmount, text);
         return this;
     }
 
-    public IndentedStringBuilder UnIndent() {
-        Indent--;
+    public IGeneratorStringBuilder UnIndent() {
+        IndentAmount--;
         return this;
     }
-    public IndentedStringBuilder UnIndentLine(string text) {
-        _stringBuilder.AppendLineWithIndentation(--Indent, text);
-        return this;
-    }
-    
-    public IndentedStringBuilder IndentLine() {
-        _stringBuilder.AppendLineWithIndentation(++Indent);
+
+    public IGeneratorStringBuilder Indent() {
+        IndentAmount++;
         return this;
     }
     
-    public IndentedStringBuilder IndentLine(string text) {
-        _stringBuilder.AppendLineWithIndentation(++Indent, text);
+    public IGeneratorStringBuilder UnIndentLine(string text) {
+        _stringBuilder.AppendLineWithIndentation(--IndentAmount, text);
+        return this;
+    }
+    
+    public IGeneratorStringBuilder IndentLine() {
+        _stringBuilder.AppendLineWithIndentation(++IndentAmount);
+        return this;
+    }
+    
+    public IGeneratorStringBuilder IndentLine(string text) {
+        _stringBuilder.AppendLineWithIndentation(++IndentAmount, text);
         return this;
     }
     
@@ -57,7 +63,7 @@ public class IndentedStringBuilder {
 
     public IndentedStringBuilder Clear() {
         _stringBuilder.Clear();
-        Indent = 0;
+        IndentAmount = 0;
         return this;
     }
 }

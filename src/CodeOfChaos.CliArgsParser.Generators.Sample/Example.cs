@@ -4,7 +4,6 @@
 using CodeOfChaos.CliArgsParser.Contracts;
 using CodeOfChaos.CliArgsParser.Attributes;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace CodeOfChaos.CliArgsParser.Generators.Sample;
@@ -14,7 +13,7 @@ namespace CodeOfChaos.CliArgsParser.Generators.Sample;
 // ---------------------------------------------------------------------------------------------------------------------
 [CliArgsCommand("test")]
 [CliArgsDescription("This is a test command")]
-public class Command : ICommand<CommandParameters> {
+public partial class Command : ICommand<CommandParameters> {
     public Task ExecuteAsync(CommandParameters parameters) {
         throw new NotImplementedException();
     }
@@ -37,7 +36,7 @@ public readonly partial struct CommandParameters : IParameters {
     [CliArgsDescription("This is a test parameter")]
     public string? OptionalTestOtherValue { get; init; }
     
-    [CliArgsParameter("test-other-optional-else", "too")]
+    [CliArgsParameter("test-other-optional-else", "tooe")]
     [CliArgsDescription("This is a test parameter")]
     public string[] OptionalTestOtherElseValue { get; init; } = [];
 }
