@@ -7,6 +7,7 @@
 
 // ReSharper disable once CheckNamespace
 // ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnusedType.Global
 namespace System.Diagnostics.CodeAnalysis;
 #if !NETCOREAPP
 
