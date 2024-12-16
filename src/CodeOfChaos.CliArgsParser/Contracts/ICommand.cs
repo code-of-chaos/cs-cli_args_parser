@@ -2,15 +2,13 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace CodeOfChaos.CliArgsParser.Contracts;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ICommand<in T> :
     // Ah blessed be the workarounds.
-    IHasCommandData, 
+    IHasCommandData,
     IHasInitializeAsync
-    where T : struct, IParameters 
-{
+    where T : struct, IParameters {
     Task ExecuteAsync(T parameters);
 }

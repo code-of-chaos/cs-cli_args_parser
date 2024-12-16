@@ -8,13 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace CodeOfChaos.CliArgsParser.Generators.Content.ParametersGenerator;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class ParameterStructDto(ISymbol symbol, StructDeclarationSyntax syntax) {
-    private readonly bool _isPartial = syntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PartialKeyword));
     private readonly bool _hasEmptyConstructor = syntax.ParameterList?.Parameters.Count == 0;
+    private readonly bool _isPartial = syntax.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PartialKeyword));
     private readonly Location _location = symbol.Locations.First();
 
     public readonly string ClassName = symbol.Name;
@@ -36,7 +35,7 @@ public class ParameterStructDto(ISymbol symbol, StructDeclarationSyntax syntax) 
                 .ToArray()
         };
     }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -44,7 +43,7 @@ public class ParameterStructDto(ISymbol symbol, StructDeclarationSyntax syntax) 
         string constructor = _hasEmptyConstructor ? string.Empty : "()";
         return $"{ClassName}{constructor}";
     }
-    
+
     public void ReportDiagnostics(SourceProductionContext context) {
         // Check the variables of this class
         if (!_isPartial) context.ReportParameterStructMustBePartial(_location, ClassName);
@@ -53,7 +52,7 @@ public class ParameterStructDto(ISymbol symbol, StructDeclarationSyntax syntax) 
         //      but it is easier to check and assign them in this level
         GatherDuplicateNames().ForEach(dto => dto.IsDuplicateName = true);
         GatherDuplicateShortNames().ForEach(dto => dto.IsDuplicateShortName = true);
-        
+
         // check all the nested propertyDtos as well for individual errors
         foreach (PropertyDto dto in PropertyDtos) {
             dto.ReportDiagnostics(context);

@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        
+
         <IsPackable>true</IsPackable>
         <PackageId>CodeOfChaos.CliArgsParser</PackageId> <!-- Main package name -->
         <Version>3.0.3</Version> <!-- Package version -->
@@ -20,11 +20,11 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-        <None Include="..\..\README.md" Pack="true" PackagePath="" />
-        <None Include="..\..\assets/icon.png" Pack="true" PackagePath="" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+        <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+        <None Include="..\..\assets/icon.png" Pack="true" PackagePath=""/>
     </ItemGroup>
 
 </Project>

@@ -9,7 +9,6 @@ namespace CodeOfChaos.CliArgsParser.Attributes;
 #pragma warning disable CS9113 // Parameter is unread.
 public class CliArgsParameterAttribute(string name, string? shortName = null, ParameterType type = ParameterType.Value) : Attribute {
 #pragma warning restore CS9113 // Parameter is unread.
-
 }
 
 public enum ParameterType : uint {

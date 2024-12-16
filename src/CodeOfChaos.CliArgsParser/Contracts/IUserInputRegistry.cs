@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace CodeOfChaos.CliArgsParser.Contracts;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ public interface IUserInputRegistry {
 
     T GetParameterByPossibleNames<T>(string name, string shortName);
     T? GetOptionalParameterByPossibleNames<T>(string name, string shortName);
-    
+
     T GetParameter<T>(string key);
     T? GetOptionalParameter<T>(string key);
 }

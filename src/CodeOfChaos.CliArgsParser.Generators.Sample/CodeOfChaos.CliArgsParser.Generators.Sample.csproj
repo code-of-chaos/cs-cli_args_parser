@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\CodeOfChaos.CliArgsParser.Generators\CodeOfChaos.CliArgsParser.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-        <ProjectReference Include="..\CodeOfChaos.CliArgsParser\CodeOfChaos.CliArgsParser.csproj" />
+        <ProjectReference Include="..\CodeOfChaos.CliArgsParser\CodeOfChaos.CliArgsParser.csproj"/>
     </ItemGroup>
 
 </Project>
