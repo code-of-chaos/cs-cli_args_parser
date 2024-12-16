@@ -61,8 +61,8 @@ public class PropertyDto(IPropertySymbol symbol, PropertyDeclarationSyntax synta
     // -----------------------------------------------------------------------------------------------------------------
     public string ToPropertyInitialization() {
         return IsRequiredProperty 
-            ? $"{PropertyName} = registry.GetParameter<{PropertyType}>(\"{ParameterName}\")," 
-            : $"{PropertyName} = registry.GetOptionalParameter<{PropertyType}>(\"{ParameterName}\") ?? {PropertyDefaultValue},";
+            ? $"{PropertyName} = registry.GetParameterByPossibleNames<{PropertyType}>(\"--{ParameterName}\", \"-{ParameterShortName}\")," 
+            : $"{PropertyName} = registry.GetOptionalParameterByPossibleNames<{PropertyType}>(\"--{ParameterName}\", \"-{ParameterShortName}\") ?? {PropertyDefaultValue},";
     }
 
     public void ReportDiagnostics(SourceProductionContext context) {

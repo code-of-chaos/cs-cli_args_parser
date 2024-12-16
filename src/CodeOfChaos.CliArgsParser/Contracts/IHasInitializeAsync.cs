@@ -7,5 +7,5 @@ namespace CodeOfChaos.CliArgsParser.Contracts;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public interface IHasInitializeAsync {
-    Task InitializeAsync(ICommandInputRegistry registry);
+    Task InitializeAsync(IUserInputRegistry registry);
 }

@@ -20,15 +20,15 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
     public readonly string ClassName = symbol.Name;
     public readonly string Namespace = symbol.ContainingNamespace.ToDisplayString();
 
-    private readonly ITypeSymbol? GenericTypeArgument = (symbol as ITypeSymbol)?.AllInterfaces.FirstOrDefault(i => i.OriginalDefinition.ToDisplayString().EndsWith("ICommand<T>"))?.TypeArguments.FirstOrDefault();
-    public string GenericTypeDisplayName => GenericTypeArgument?.ToDisplayString() ?? "UNDEFINED";
+    private readonly ITypeSymbol? _genericTypeArgument = (symbol as ITypeSymbol)?.AllInterfaces.FirstOrDefault(i => i.OriginalDefinition.ToDisplayString().EndsWith("ICommand<T>"))?.TypeArguments.FirstOrDefault();
+    private string GenericTypeDisplayName => _genericTypeArgument?.ToDisplayString() ?? "UNDEFINED";
     private readonly AttributeData? _commandNameAttribute = symbol.GetAttributes().FirstOrDefault(attr => attr.AttributeClass?.Name.ToString().Contains("CliArgsCommand") == true);
-    public string CommandName => 
+    private string CommandName => 
         _commandNameAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() 
         ?? ClassName.Replace("Command", "").ToLowerInvariant(); // Maybe create a ToKebabCase method?
     
     private readonly AttributeData? _descriptionAttribute = symbol.GetAttributes().FirstOrDefault(attr => attr.AttributeClass?.Name.ToString().Contains("CliArgsDescription") == true);
-    public string Description => _descriptionAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
+    private string Description => _descriptionAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
     
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
@@ -57,7 +57,7 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
     }
 
     public void ToCommandInitialization(GeneratorStringBuilder builder) {
-        builder.AppendLine("public Task InitializeAsync(ICommandInputRegistry registry) {")
+        builder.AppendLine("public Task InitializeAsync(IUserInputRegistry registry) {")
             .Indent()
             .AppendLine($"return ExecuteAsync({GenericTypeDisplayName}.FromRegistry(registry));")
             .UnIndent()
@@ -66,6 +66,6 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
 
     public void ReportDiagnostics(SourceProductionContext context) {
         if (!_isPartial) context.ReportCommandClassMustBePartial(_location, ClassName);
-        if (GenericTypeArgument is null) context.ReportCommandClassMustImplementICommand(_location, ClassName);
+        if (_genericTypeArgument is null) context.ReportCommandClassMustImplementICommand(_location, ClassName);
     }
 }

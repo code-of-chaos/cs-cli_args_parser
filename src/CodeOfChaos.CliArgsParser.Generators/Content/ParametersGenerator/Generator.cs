@@ -62,7 +62,7 @@ public class Generator : IIncrementalGenerator{
                 .AppendLine($"namespace {dto.Namespace};")
                 .AppendLine("#nullable enable")
                 .AppendLine($"public partial struct {dto.ToDeclarationName()} {{")
-                .IndentLine($"public static {dto.ClassName} FromRegistry(ICommandInputRegistry registry) {{")
+                .IndentLine($"public static {dto.ClassName} FromRegistry(IUserInputRegistry registry) {{")
                 .IndentLine($"return new() {{")
                 .Indent();
 

@@ -1,12 +1,18 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace CodeOfChaos.CliArgsParser;
+namespace CodeOfChaos.CliArgsParser.Contracts;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public class CommandInputRegistry {
-    public T GetParameter<T>(string key) => throw new NotImplementedException();
-    public T? GetOptionalParameter<T>(string key) => default;
+public interface IUserInputRegistry {
+    void IngestString(string[] input);
+    void IngestString(string input);
+
+    T GetParameterByPossibleNames<T>(string name, string shortName);
+    T? GetOptionalParameterByPossibleNames<T>(string name, string shortName);
+    
+    T GetParameter<T>(string key);
+    T? GetOptionalParameter<T>(string key);
 }
