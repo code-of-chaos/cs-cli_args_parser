@@ -83,10 +83,17 @@ public partial class UserInputRegistry : IUserInputRegistry {
     }
 
     public T? GetOptionalParameterByPossibleNames<T>(string name, string shortName) {
-        if (_parameters.TryGetValue(name, out object? parameter)) return (T)Convert.ChangeType(parameter, typeof(T));
-        if (_parameters.TryGetValue(shortName, out parameter)) return (T)Convert.ChangeType(parameter, typeof(T));
+        if (!_parameters.TryGetValue(name, out object? parameter) && !_parameters.TryGetValue(shortName, out parameter)) return default;
+        if (parameter is T tValue) return tValue;
 
-        return default;
+        // Handle nullable value types
+        Type targetType = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
+
+        try {
+            return (T)Convert.ChangeType(parameter, targetType);
+        } catch {
+            return default; // Return default if conversion fails
+        }
     }
 
     public T GetParameter<T>(string key) {
