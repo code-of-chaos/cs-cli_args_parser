@@ -1,18 +1,17 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.CliArgsParser;
-using CodeOfChaos.CliArgsParser.Library;
+using System.Threading.Tasks;
 
-namespace Tools.CodeOfChaos.CliArgsParser;
+namespace CodeOfChaos.CliArgsParser.Generators.Sample;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class Program {
     public static async Task Main(string[] args) {
-        global::CodeOfChaos.CliArgsParser.CliArgsParser? parser = CliArgsBuilder.CreateFromConfig(
+        CliArgsParser parser = CliArgsBuilder.CreateFromConfig(
             config => {
-                config.AddCommandsFromAssemblyEntrypoint<IAssemblyEntry>();
+                config.AddCommand<ExampleCommand>();
             }
         ).Build();
 

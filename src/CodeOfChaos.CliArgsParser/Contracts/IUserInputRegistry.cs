@@ -1,21 +1,18 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.CliArgsParser;
-using CodeOfChaos.CliArgsParser.Library;
-
-namespace Tools.CodeOfChaos.CliArgsParser;
+namespace CodeOfChaos.CliArgsParser.Contracts;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class Program {
-    public static async Task Main(string[] args) {
-        global::CodeOfChaos.CliArgsParser.CliArgsParser? parser = CliArgsBuilder.CreateFromConfig(
-            config => {
-                config.AddCommandsFromAssemblyEntrypoint<IAssemblyEntry>();
-            }
-        ).Build();
+public interface IUserInputRegistry : IDisposable {
+    void IngestString(IEnumerable<string> input);
+    void IngestString(string[] input);
+    void IngestString(string input);
 
-        await parser.ParseAsync(args);
-    }
+    T GetParameterByPossibleNames<T>(string name, string shortName);
+    T? GetOptionalParameterByPossibleNames<T>(string name, string shortName);
+
+    T GetParameter<T>(string key);
+    T? GetOptionalParameter<T>(string key);
 }
