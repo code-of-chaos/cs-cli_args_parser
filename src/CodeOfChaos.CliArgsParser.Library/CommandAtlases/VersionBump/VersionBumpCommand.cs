@@ -81,20 +81,12 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
             CreateNoWindow = true
         };
 
-        using Process? gitTagProcess = Process.Start(gitTagInfo);
         
-        if (gitTagProcess == null) return "Failed to start the Git process.";
+        using Process? gitCommitProcess = Process.Start(gitTagInfo);
+        Console.WriteLine(await gitCommitProcess?.StandardOutput.ReadToEndAsync()!);
+        await gitCommitProcess.WaitForExitAsync();
 
-        // Read both output and error streams
-        string output = await gitTagProcess.StandardOutput.ReadToEndAsync();
-        string error = await gitTagProcess.StandardError.ReadToEndAsync();
-
-        // Ensure the process finishes
-        await gitTagProcess.WaitForExitAsync();
-
-        if (gitTagProcess.ExitCode != 0) {
-            return $"Git Tagging failed: {error} {output}";
-        }
+        if (gitCommitProcess.ExitCode != 0) return "Git Tagging failed";
 
         return new Success();
     }
