@@ -91,8 +91,9 @@ public partial class UserInputRegistry : IUserInputRegistry {
 
         try {
             return (T)Convert.ChangeType(parameter, targetType);
-        } catch {
-            return default; // Return default if conversion fails
+        }
+        catch {
+            return default;// Return default if conversion fails
         }
     }
 

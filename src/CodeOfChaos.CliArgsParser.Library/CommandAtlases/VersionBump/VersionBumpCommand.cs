@@ -5,7 +5,6 @@ using AterraEngine.Unions;
 using CodeOfChaos.CliArgsParser.Attributes;
 using CodeOfChaos.CliArgsParser.Contracts;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -112,7 +111,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
         if (projectFiles.Length == 0) {
             return new Failure<string>("No projects specified");
         }
-        
+
         VersionSection sectionToBump = args.Section;
         SemanticVersionDto? versionDto = null;
 
@@ -135,13 +134,14 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
             if (versionElement == null) {
                 return new Failure<string>($"File {projectFile} did not contain a version element");
             }
-            
+
             if (versionDto is null) {
-                if (!SemanticVersionDto.TryParse(versionElement.Value, out SemanticVersionDto? dto)) 
+                if (!SemanticVersionDto.TryParse(versionElement.Value, out SemanticVersionDto? dto)) {
                     return new Failure<string>($"File {projectFile} contained an invalid version element: {versionElement.Value}");
-                
+                }
+
                 dto.BumpVersion(sectionToBump);
-                
+
                 versionDto = dto;
             }
 
@@ -153,6 +153,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
                 Async = true,
                 OmitXmlDeclaration = true
             };
+
             await using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) {
                 await using var writer = XmlWriter.Create(stream, settings);
                 document.Save(writer);

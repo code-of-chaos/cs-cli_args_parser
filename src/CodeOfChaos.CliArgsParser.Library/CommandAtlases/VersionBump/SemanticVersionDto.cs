@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.VersionBump;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -14,14 +13,14 @@ public partial class SemanticVersionDto {
     private uint Minor { get; set; }
     private uint Patch { get; set; }
     private uint? Preview { get; set; }
-    
+
     [GeneratedRegex(@"^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(-preview\.(?<preview>\d+))?$")]
     private static partial Regex FindVersionRegex { get; }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public static bool TryParse(string version,[NotNullWhen(true)] out SemanticVersionDto? result) {
+    public static bool TryParse(string version, [NotNullWhen(true)] out SemanticVersionDto? result) {
         Match match = FindVersionRegex.Match(version);
         if (!match.Success) {
             result = null;
@@ -34,6 +33,7 @@ public partial class SemanticVersionDto {
             Patch = uint.Parse(match.Groups["patch"].Value),
             Preview = match.Groups["preview"].Success ? uint.Parse(match.Groups["preview"].Value) : null
         };
+
         return true;
     }
 
@@ -71,8 +71,8 @@ public partial class SemanticVersionDto {
                 break;
         }
     }
-    
-    public override string ToString() => Preview is not null 
-        ? $"{Major}.{Minor}.{Patch}-preview.{Preview}" 
+
+    public override string ToString() => Preview is not null
+        ? $"{Major}.{Minor}.{Patch}-preview.{Preview}"
         : $"{Major}.{Minor}.{Patch}";
 }

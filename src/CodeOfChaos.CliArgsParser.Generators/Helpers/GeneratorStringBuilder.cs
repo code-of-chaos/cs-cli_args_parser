@@ -20,6 +20,7 @@ public class GeneratorStringBuilder(int paddingChars = 4) {
         foreach (string @using in usings) {
             AppendLine($"using {@using};");
         }
+
         return this;
     }
 

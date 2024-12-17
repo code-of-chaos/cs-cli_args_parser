@@ -78,8 +78,8 @@ public class Generator : IIncrementalGenerator {
                 .AppendLine("public T NewFromRegistry<T>(IUserInputRegistry registry) where T : struct, IParameters {")
                 .Indent()
                 .AppendLine($"if(typeof(T) != typeof({dto.ClassName})) throw new ArgumentException(); ")
-                .AppendLine( "object boxed = FromRegistry(registry)!;")
-                .AppendLine( "return (T)boxed;")
+                .AppendLine("object boxed = FromRegistry(registry)!;")
+                .AppendLine("return (T)boxed;")
                 .UnIndentLine("}");
 
             builder

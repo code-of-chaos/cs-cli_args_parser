@@ -43,6 +43,7 @@ public class CliArgsBuilder(CliArgsBuilderConfig config) {
         if (Activator.CreateInstance(type) is not INonGenericCommandInterfaces { CommandData: var commandData } command) {
             throw new Exception($"Command type {type.Name} does not implement INonGenericCommandInterfaces.");
         }
+
         return (commandData, command);
     }
 }

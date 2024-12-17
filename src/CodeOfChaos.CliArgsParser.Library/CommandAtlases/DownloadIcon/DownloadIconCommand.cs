@@ -5,7 +5,6 @@ using CodeOfChaos.CliArgsParser.Attributes;
 using CodeOfChaos.CliArgsParser.Contracts;
 
 namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.DownloadIcon;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -16,7 +15,5 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Task ExecuteAsync(DownloadIconParameters parameters) {
-        throw new NotImplementedException();
-    }
+    public Task ExecuteAsync(DownloadIconParameters parameters) => throw new NotImplementedException();
 }

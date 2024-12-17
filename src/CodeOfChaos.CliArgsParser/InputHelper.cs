@@ -2,7 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 namespace CodeOfChaos.CliArgsParser;
-
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ public static class InputHelper {
             input.Select(arg => {
                 // if it has already been corrected, just return as is
                 if (arg.Contains("=\"") && arg.EndsWith('"')) return arg;
-                
+
                 // Wrap in quotes if it is a kvp
                 if (arg.Contains('=')) {
                     string[] parts = arg.Split('=', 2);

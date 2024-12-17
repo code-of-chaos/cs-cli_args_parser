@@ -14,9 +14,9 @@ public partial class CliArgsParser {
     public required FrozenDictionary<string, (CommandData, INonGenericCommandInterfaces)> CommandLookup { get; init; }
     public (CommandData CommandData, INonGenericCommandInterfaces CommandObject)? StartupCommand { get; init; }
 
-    public required bool HasCustomExitCommand { get; init;}
-    public required bool HasCustomHelpCommand { get; init;}
-    
+    public required bool HasCustomExitCommand { get; init; }
+    public required bool HasCustomHelpCommand { get; init; }
+
     [GeneratedRegex(@"\s+")]
     private static partial Regex FindEmptySpacesRegex { get; }
 
@@ -79,14 +79,20 @@ public partial class CliArgsParser {
 
             try {
                 if (!HasCustomExitCommand && input.Equals("exit")) {
+                    // TODO create a proper automagic exit command
                     Console.WriteLine("Exiting interactive user input mode.");
                     break;
                 }
 
                 if (!HasCustomHelpCommand && input.Equals("help")) {
-                    
+                    // TODO create a proper automagic help command
+                    Console.WriteLine("Available commands:");
+                    foreach (string commandName in CommandLookup.Keys) {
+                        Console.WriteLine($" - {commandName}");
+                    }
+                    continue;
                 }
-                
+
                 // Parse and execute the command
                 await ParseAsync(input);
             }

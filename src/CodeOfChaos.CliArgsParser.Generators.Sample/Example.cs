@@ -37,12 +37,13 @@ public partial class ExampleCommand : ICommand<CommandParameters> {
             foreach (string value in parameters.OptionalTestOtherElseValue) {
                 Console.WriteLine($" - {value}");
             }
-        } else {
+        }
+        else {
             Console.WriteLine("OptionalTestOtherElseValue is empty.");
         }
 
         // Simulate some asynchronous work
-        await Task.Delay(100); // Example of an asynchronous operation
+        await Task.Delay(100);// Example of an asynchronous operation
 
         Console.WriteLine("Command executed successfully.");
     }

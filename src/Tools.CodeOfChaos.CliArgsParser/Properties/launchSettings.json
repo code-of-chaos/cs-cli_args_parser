@@ -12,7 +12,7 @@
       "commandName": "Project",
       "commandLineArgs": "version-bump --section=\"patch\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
     },
-    "Preview Version Bump" : {
+    "Preview Version Bump": {
       "commandName": "Project",
       "commandLineArgs": "version-bump --section=\"preview\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
     }
