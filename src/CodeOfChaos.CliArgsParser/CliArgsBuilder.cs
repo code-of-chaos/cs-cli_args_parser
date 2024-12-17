@@ -2,14 +2,13 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using CodeOfChaos.CliArgsParser.Contracts;
+using System.Collections.Frozen;
 
 namespace CodeOfChaos.CliArgsParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public class CliArgsBuilder(CliArgsBuilderConfig config) {
-    private readonly Dictionary<string, (CommandData, IHasInitializeAsync)> _commands = new();
-
     // -----------------------------------------------------------------------------------------------------------------
     // Constructors
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,11 +22,24 @@ public class CliArgsBuilder(CliArgsBuilderConfig config) {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public CliArgsParser Build() {
+        Dictionary<string, (CommandData, INonGenericCommandInterfaces)> commands = new();
+        
         while (config.Commands.TryPop(out Type? commandType)) {
-            if (Activator.CreateInstance(commandType) is not IHasCommandData { CommandData: var commandData } command) throw new Exception($"Command type {commandType.Name} does not implement IHasCommandData.");
-            if (command is not IHasInitializeAsync hasInitializeAsync) throw new Exception($"Command type {commandType.Name} does not implement IHasInitializeAsync.");
-            if (!_commands.TryAdd(commandData.Name, (commandData, hasInitializeAsync))) throw new Exception($"Command name {commandType.Name} already exists under another class.");
+            (CommandData CommandData, INonGenericCommandInterfaces) tuple = ConvertTypeToCommand(commandType);
+            if (!commands.TryAdd(tuple.CommandData.Name, tuple)) throw new Exception($"Command name {commandType.Name} already exists under another class.");
         }
-        return new CliArgsParser();
+        
+        return new CliArgsParser {
+            CommandLookup = commands.ToFrozenDictionary(),
+            StartupCommand = config.StartupCommand is not null 
+                ? ConvertTypeToCommand(config.StartupCommand)
+                : null
+        };
+    }
+
+    private static (CommandData, INonGenericCommandInterfaces) ConvertTypeToCommand(Type type) {
+        if (Activator.CreateInstance(type) is not INonGenericCommandInterfaces { CommandData: var commandData } command) 
+            throw new Exception($"Command type {type.Name} does not implement INonGenericCommandInterfaces.");
+        return (commandData, command);
     }
 }

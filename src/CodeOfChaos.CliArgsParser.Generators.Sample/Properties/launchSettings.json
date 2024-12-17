@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "Run Example": {
+      "commandName": "Project",
+      "commandLineArgs": "example --test=\"Some Value\" -v"
+    }
+  }
+}

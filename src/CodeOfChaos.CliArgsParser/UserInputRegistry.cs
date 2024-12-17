@@ -8,7 +8,7 @@ namespace CodeOfChaos.CliArgsParser;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public partial class UserInputRegistry : IUserInputRegistry, IDisposable {
+public partial class UserInputRegistry : IUserInputRegistry {
     private readonly Dictionary<string, object> _parameters = new();
     private uint _positionalCounter;
     private uint _quotedStringCounter;
@@ -26,6 +26,7 @@ public partial class UserInputRegistry : IUserInputRegistry, IDisposable {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
+    public void IngestString(IEnumerable<string> input) => IngestString(string.Join(" ", input));
     public void IngestString(string[] input) => IngestString(string.Join(" ", input));
 
     public void IngestString(string input) {

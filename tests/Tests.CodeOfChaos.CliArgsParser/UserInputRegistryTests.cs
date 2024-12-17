@@ -27,7 +27,7 @@ public class UserInputRegistryTests {
     public async Task Test_IngestString_ParsesMultipleKeyValuePairs() {
         // Arrange
         var registry = new UserInputRegistry();
-        string input = "--key1=value1 --key2=value2";
+        string input = """--key1=value1 --key2="value 2" """;
 
         // Act
         registry.IngestString(input);
@@ -38,7 +38,7 @@ public class UserInputRegistryTests {
         await Assert.That(keyValue1).IsNotNull().Because("The parameter should exist");
         await Assert.That(keyValue2).IsNotNull().Because("The parameter should exist");
         await Assert.That(keyValue1).IsEqualTo("value1");
-        await Assert.That(keyValue2).IsEqualTo("value2");
+        await Assert.That(keyValue2).IsEqualTo("value 2");
     }
 
     [Test]

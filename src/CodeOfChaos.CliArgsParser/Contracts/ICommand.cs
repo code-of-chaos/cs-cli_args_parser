@@ -7,8 +7,7 @@ namespace CodeOfChaos.CliArgsParser.Contracts;
 // ---------------------------------------------------------------------------------------------------------------------
 public interface ICommand<in T> :
     // Ah blessed be the workarounds.
-    IHasCommandData,
-    IHasInitializeAsync
+    INonGenericCommandInterfaces
     where T : struct, IParameters {
     Task ExecuteAsync(T parameters);
 }
