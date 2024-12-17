@@ -60,7 +60,8 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
     public void ToCommandInitialization(GeneratorStringBuilder builder) {
         builder.AppendLine("public Task InitializeAsync(IUserInputRegistry registry) {")
             .Indent()
-            .AppendLine($"return ExecuteAsync({GenericTypeDisplayName}.FromRegistry(registry));")
+            .AppendLine($"var data = {GenericTypeDisplayName}.FromRegistry(registry);")
+            .AppendLine($"return ExecuteAsync(data);")
             .UnIndent()
             .AppendLine("}");
     }

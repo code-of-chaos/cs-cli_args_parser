@@ -33,7 +33,9 @@ public class CliArgsBuilder(CliArgsBuilderConfig config) {
             CommandLookup = commands.ToFrozenDictionary(),
             StartupCommand = config.StartupCommand is not null
                 ? ConvertTypeToCommand(config.StartupCommand)
-                : null
+                : null,
+            HasCustomExitCommand = commands.ContainsKey("exit"),
+            HasCustomHelpCommand = commands.ContainsKey("help")
         };
     }
 

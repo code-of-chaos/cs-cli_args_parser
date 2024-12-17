@@ -37,8 +37,7 @@ public partial class ExampleCommand : ICommand<CommandParameters> {
             foreach (string value in parameters.OptionalTestOtherElseValue) {
                 Console.WriteLine($" - {value}");
             }
-        }
-        else {
+        } else {
             Console.WriteLine("OptionalTestOtherElseValue is empty.");
         }
 

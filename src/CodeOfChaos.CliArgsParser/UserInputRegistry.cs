@@ -26,8 +26,8 @@ public partial class UserInputRegistry : IUserInputRegistry {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public void IngestString(IEnumerable<string> input) => IngestString(string.Join(" ", input));
-    public void IngestString(string[] input) => IngestString(string.Join(" ", input));
+    public void IngestString(IEnumerable<string> input) => IngestString(InputHelper.ToOneLine(input as string[] ?? input.ToArray()));
+    public void IngestString(string[] input) => IngestString(InputHelper.ToOneLine(input));
 
     public void IngestString(string input) {
         MatchCollection matches = GatherValuesRegex.Matches(input);

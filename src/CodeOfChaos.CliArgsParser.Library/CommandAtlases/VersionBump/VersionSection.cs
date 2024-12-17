@@ -1,10 +1,15 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-namespace CodeOfChaos.CliArgsParser.Contracts;
+namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.VersionBump;
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public interface IParameters {
-    T NewFromRegistry<T>(IUserInputRegistry registry) where T : struct, IParameters;
+public enum VersionSection {
+    None = 0,
+    Major,
+    Minor,
+    Patch,
+    Preview
 }

@@ -14,22 +14,16 @@ public partial class CliArgsParser {
     public required FrozenDictionary<string, (CommandData, INonGenericCommandInterfaces)> CommandLookup { get; init; }
     public (CommandData CommandData, INonGenericCommandInterfaces CommandObject)? StartupCommand { get; init; }
 
-
+    public required bool HasCustomExitCommand { get; init;}
+    public required bool HasCustomHelpCommand { get; init;}
+    
     [GeneratedRegex(@"\s+")]
     private static partial Regex FindEmptySpacesRegex { get; }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Task ParseAsync(string[] args) => ParseAsync(string.Join(" ",
-        args.Select(arg => {
-            if (!arg.Contains('=')) return arg; // Leave other arguments unchanged
-
-            string[] parts = arg.Split('=', 2); // Split into 'key' and 'value'
-            return $"{parts[0]}=\"{parts[1]}\""; // Format as key="value"
-        })
-    ));
-
+    public Task ParseAsync(string[] args) => ParseAsync(InputHelper.ToOneLine(args));
     public async Task ParseAsync(string args) {
         if (string.IsNullOrWhiteSpace(args)) {
             throw new ArgumentException("Arguments cannot be null or empty.", nameof(args));
@@ -58,7 +52,6 @@ public partial class CliArgsParser {
     }
 
     public Task ParseStartupArgs(string[] args) => ParseStartupArgs(string.Join(" ", args));
-
     public async Task ParseStartupArgs(string args) {
         if (StartupCommand is not { CommandObject: var commandObject }) throw new Exception("No startup command set.");
 
@@ -78,12 +71,6 @@ public partial class CliArgsParser {
             Console.Write("$:> ");
             string input = Console.ReadLine()?.Trim() ?? string.Empty;
 
-            // Check for exit condition
-            if (input.Equals("exit", StringComparison.OrdinalIgnoreCase)) {
-                Console.WriteLine("Exiting interactive user input mode.");
-                break;
-            }
-
             // Skip empty input
             if (string.IsNullOrWhiteSpace(input)) {
                 Console.WriteLine("No command entered, please try again.");
@@ -91,6 +78,15 @@ public partial class CliArgsParser {
             }
 
             try {
+                if (!HasCustomExitCommand && input.Equals("exit")) {
+                    Console.WriteLine("Exiting interactive user input mode.");
+                    break;
+                }
+
+                if (!HasCustomHelpCommand && input.Equals("help")) {
+                    
+                }
+                
                 // Parse and execute the command
                 await ParseAsync(input);
             }
