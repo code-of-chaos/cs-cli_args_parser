@@ -18,13 +18,15 @@ public class PropertyDto(IPropertySymbol symbol, PropertyDeclarationSyntax synta
 
     public readonly bool IsFlag = parameterAttribute.ConstructorArguments.ElementAtOrDefault(2).Value as uint? == 1u;
     public readonly bool IsRequiredProperty = syntax.Modifiers.Any(SyntaxKind.RequiredKeyword);
-
+    
     public readonly string ParameterName = parameterAttribute.ConstructorArguments.ElementAt(0).Value?.ToString() ?? string.Empty;
     public readonly string? ParameterShortName = parameterAttribute.ConstructorArguments.ElementAtOrDefault(1).Value?.ToString();
 
     public readonly string PropertyDefaultValue = ToPropertyDefaultValue(syntax, symbol);
     public readonly string PropertyName = syntax.Identifier.ToString();
     public readonly TypeSyntax PropertyType = syntax.Type;
+    public readonly bool IsPropertyValueType = symbol.Type.IsValueType;
+    public readonly bool IsNullableAnnotated = symbol.Type.NullableAnnotation == NullableAnnotation.Annotated;
     public string Description => _descriptionAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
 
     // diagnostics
@@ -61,10 +63,17 @@ public class PropertyDto(IPropertySymbol symbol, PropertyDeclarationSyntax synta
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public string ToPropertyInitialization() =>
-        IsRequiredProperty
-            ? $"{PropertyName} = registry.GetParameterByPossibleNames<{PropertyType}>(\"--{ParameterName}\", \"-{ParameterShortName}\"),"
-            : $"{PropertyName} = registry.GetOptionalParameterByPossibleNames<{PropertyType}>(\"--{ParameterName}\", \"-{ParameterShortName}\") ?? {PropertyDefaultValue},";
+    public string ToPropertyInitialization() {
+        return this switch {
+            { IsRequiredProperty: true } 
+                => $"{PropertyName} = registry.GetParameterByPossibleNames<{PropertyType}>(\"--{ParameterName}\", \"-{ParameterShortName}\"),",
+            { IsPropertyValueType: true, IsNullableAnnotated: false }
+                => $"{PropertyName} = registry.GetOptionalParameterByPossibleNames<{PropertyType}?>(\"--{ParameterName}\", \"-{ParameterShortName}\") ?? {PropertyDefaultValue},",
+            _ 
+                => $"{PropertyName} = registry.GetOptionalParameterByPossibleNames<{PropertyType}>(\"--{ParameterName}\", \"-{ParameterShortName}\") ?? {PropertyDefaultValue},"
+        };
+    }
+    
 
     public void ReportDiagnostics(SourceProductionContext context) {
         if (IsDuplicateName) context.ReportParameterPropertyDuplicateNames(_location, PropertyName, ParameterName);
