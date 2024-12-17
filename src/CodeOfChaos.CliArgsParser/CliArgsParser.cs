@@ -10,8 +10,8 @@ namespace CodeOfChaos.CliArgsParser;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public partial class CliArgsParser {
-    public required FrozenDictionary<string, (CommandData, INonGenericCommandInterfaces)> CommandLookup { get; init; }
     private readonly IUserInputRegistry _userInputRegistry = new UserInputRegistry();
+    public required FrozenDictionary<string, (CommandData, INonGenericCommandInterfaces)> CommandLookup { get; init; }
     public (CommandData CommandData, INonGenericCommandInterfaces CommandObject)? StartupCommand { get; init; }
 
 
@@ -21,9 +21,10 @@ public partial class CliArgsParser {
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
-    public Task ParseAsync(string[] args) => ParseAsync(string.Join(" ", 
+    public Task ParseAsync(string[] args) => ParseAsync(string.Join(" ",
         args.Select(arg => {
             if (!arg.Contains('=')) return arg; // Leave other arguments unchanged
+
             string[] parts = arg.Split('=', 2); // Split into 'key' and 'value'
             return $"{parts[0]}=\"{parts[1]}\""; // Format as key="value"
         })
@@ -72,7 +73,7 @@ public partial class CliArgsParser {
 
         while (true) {
             using IUserInputRegistry registry = _userInputRegistry;
-            
+
             // Prompt the user for input
             Console.Write("$:> ");
             string input = Console.ReadLine()?.Trim() ?? string.Empty;

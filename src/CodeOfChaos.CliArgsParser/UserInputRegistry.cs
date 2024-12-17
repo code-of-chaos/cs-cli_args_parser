@@ -50,7 +50,7 @@ public partial class UserInputRegistry : IUserInputRegistry {
                 _parameters[key] = value.Trim('"');
                 continue;
             }
-            
+
             // Single Flag
             if (match.Groups["flag"].Success) {
                 // Flags are interpreted as true by default
@@ -88,7 +88,7 @@ public partial class UserInputRegistry : IUserInputRegistry {
 
         return default;
     }
-    
+
     public T GetParameter<T>(string key) {
         if (!_parameters.TryGetValue(key, out object? parameter)) throw new KeyNotFoundException($"Parameter '{key}' not found.");
 

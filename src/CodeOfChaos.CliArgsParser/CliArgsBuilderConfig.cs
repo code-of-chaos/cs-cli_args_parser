@@ -17,14 +17,17 @@ public class CliArgsBuilderConfig {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public CliArgsBuilderConfig AddCommand<T>() => AddCommand(typeof(T));
+
     public CliArgsBuilderConfig AddCommand(Type commandType) {
         Commands.Push(commandType);
         return this;
     }
-    
+
     public CliArgsBuilderConfig AddStartupCommand<T>() => AddStartupCommand(typeof(T));
+
     public CliArgsBuilderConfig AddStartupCommand(Type commandType) {
         if (StartupCommand is not null) throw new Exception("Startup command already set.");
+
         StartupCommand = commandType;
         return this;
     }
