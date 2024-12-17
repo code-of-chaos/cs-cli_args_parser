@@ -2,19 +2,19 @@
   "profiles": {
     "Major Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump -section=\"major\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
+      "commandLineArgs": "version-bump --section=\"major\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
     },
     "Minor Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump -section=\"minor\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
+      "commandLineArgs": "version-bump --section=\"minor\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
     },
     "Patch Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump -section=\"patch\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
+      "commandLineArgs": "version-bump --section=\"patch\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
     },
     "Preview Version Bump" : {
       "commandName": "Project",
-      "commandLineArgs": "version-bump -section=\"preview\" -projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
+      "commandLineArgs": "version-bump --section=\"preview\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
     }
   }
 }
