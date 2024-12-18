@@ -39,11 +39,11 @@ public class CliArgsBuilderConfig {
         // Get all types in the provided assembly
         IEnumerable<Type> commandTypes = assembly.GetTypes()
             .Where(type =>
-                type.IsClass// Must be a class
-                && !type.IsAbstract// Must not be abstract
-                && type.IsDefined(typeof(CliArgsCommandAttribute), false)// Must have CliArgsCommandAttribute
+                type.IsClass // Must be a class
+                && !type.IsAbstract // Must not be abstract
+                && type.IsDefined(typeof(CliArgsCommandAttribute), false) // Must have CliArgsCommandAttribute
                 && type.GetInterfaces().Any(i =>
-                        i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand<>)// Must implement ICommand<T>
+                        i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommand<>) // Must implement ICommand<T>
                 )
             );
 

@@ -73,7 +73,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
                 .FirstOrDefault();
 
             if (versionElement == null) {
-                return new Failure<string>($"File did not contain a version element");
+                return new Failure<string>("File did not contain a version element");
             }
 
             if (versionDto is null) {

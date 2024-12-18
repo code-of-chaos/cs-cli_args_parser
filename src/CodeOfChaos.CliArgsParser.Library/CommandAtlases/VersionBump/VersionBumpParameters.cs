@@ -14,6 +14,7 @@ public readonly partial struct VersionBumpParameters : IParameters {
 
     [CliArgsParameter("section", "s")] [CliArgsDescription("The section of the version to bump. One of: Major, Minor, Patch")]
     public required string? SectionStringValue { get; init; }
+
     public VersionSection Section => Enum.Parse<VersionSection>(SectionStringValue ?? "None", true);
 
     [CliArgsParameter("push", "p", ParameterType.Flag)] [CliArgsDescription("Push the changes to the remote repository")]

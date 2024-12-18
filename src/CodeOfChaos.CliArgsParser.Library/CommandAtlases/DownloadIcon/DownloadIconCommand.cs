@@ -16,6 +16,9 @@ namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.DownloadIcon;
 [CliArgsDescription("Downloads and assigns the icon, to be used as nuget package's icon, for the specified project.")]
 public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
 
+    [GeneratedRegex(@"^[^/\\\s]+$")]
+    private static partial Regex IsEmptyFolderNameRegex { get; }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
@@ -25,7 +28,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
         if (getResult is { IsFailure: true, AsFailure.Value: var getError }) {
             Console.WriteLine(getError);
         }
-        
+
         Console.WriteLine("Icon downloaded successfully.");
         SuccessOrFailure applyResult = await ApplyIcon(parameters);
         if (applyResult is { IsFailure: true, AsFailure.Value: var applyError }) {
@@ -41,7 +44,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
         }
 
         await foreach (XDocument document in CsProjHelpers.GetProjectFiles(projectFiles)) {
-           
+
             // Loop through each project file's XML document
             foreach (XElement propertyGroup in document.Root?.Elements("PropertyGroup")!) {
                 XElement? iconElement = propertyGroup.Element("PackageIcon");
@@ -55,7 +58,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
                     // Update the value to ensure it's "icon.png"
                     iconElement.Value = "icon.png";
                 }
-                
+
                 // Look for ItemGroup containing Packable items
                 XElement? packableItemGroup = document.Root?
                     .Elements("ItemGroup")
@@ -76,11 +79,11 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
 
                 IEnumerable<string> indents = Enumerable.Repeat(
                     "../",
-                    1 
+                    1
                     + (IsEmptyFolderNameRegex.IsMatch(args.SourceFolder) ? 1 : 0)
                     + args.SourceFolder.Count(c => c is '/' or '\\')
                 );
-                string includeString = Path.Combine(string.Join(string.Empty,indents),args.IconFolder, "icon.png");
+                string includeString = Path.Combine(string.Join(string.Empty, indents), args.IconFolder, "icon.png");
 
                 // Add the icon.png reference if it doesn't exist
                 var newIconElement = new XElement("None",
@@ -90,7 +93,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
                 packableItemGroup.Add(newIconElement);
             }
         }
-        
+
         return new Success();
     }
 
@@ -139,10 +142,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
         }
         catch (Exception ex) {
             // Return any unexpected errors
-            return$"Unexpected error: {ex.Message}";
+            return $"Unexpected error: {ex.Message}";
         }
     }
-
-    [GeneratedRegex(@"^[^/\\\s]+$")]
-    private static partial Regex IsEmptyFolderNameRegex { get; }
 }

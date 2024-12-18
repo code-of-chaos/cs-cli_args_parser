@@ -24,6 +24,7 @@ public partial class CliArgsParser {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public Task ParseAsync(string[] args) => ParseAsync(InputHelper.ToOneLine(args));
+
     public async Task ParseAsync(string args) {
         if (string.IsNullOrWhiteSpace(args)) {
             throw new ArgumentException("Arguments cannot be null or empty.", nameof(args));
@@ -52,6 +53,7 @@ public partial class CliArgsParser {
     }
 
     public Task ParseStartupArgs(string[] args) => ParseStartupArgs(string.Join(" ", args));
+
     public async Task ParseStartupArgs(string args) {
         if (StartupCommand is not { CommandObject: var commandObject }) throw new Exception("No startup command set.");
 
