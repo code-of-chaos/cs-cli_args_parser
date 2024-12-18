@@ -7,7 +7,7 @@
         
         <!-- Main package name -->
         <PackageId>CodeOfChaos.CliArgsParser</PackageId>
-        <Version>3.0.3-preview.5</Version>
+        <Version>3.0.3-preview.6</Version>
         <Authors>Anna Sas</Authors>
         <Description>CliArgsParser is a library built around Dependency Injection to allow you to create CLI tools with ease</Description>
         <PackageProjectUrl>https://github.com/code-of-chaos/cs-code_of_chaos-cli_args_parser/</PackageProjectUrl>
@@ -22,9 +22,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
-        <None Include="..\..\README.md" Pack="true" PackagePath=""/>
-        <None Include="../../assets/icon.png" Pack="true" PackagePath=""/>
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
 </Project>
