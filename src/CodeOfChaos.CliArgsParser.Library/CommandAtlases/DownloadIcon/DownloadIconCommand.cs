@@ -5,6 +5,7 @@ using AterraEngine.Unions;
 using CodeOfChaos.CliArgsParser.Attributes;
 using CodeOfChaos.CliArgsParser.Contracts;
 using CodeOfChaos.CliArgsParser.Library.Shared;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.DownloadIcon;
@@ -73,9 +74,17 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
 
                 if (iconExists) continue;
 
+                IEnumerable<string> indents = Enumerable.Repeat(
+                    "../",
+                    1 
+                    + (IsEmptyFolderNameRegex.IsMatch(args.SourceFolder) ? 1 : 0)
+                    + args.SourceFolder.Count(c => c is '/' or '\\')
+                );
+                string includeString = Path.Combine(string.Join(string.Empty,indents),args.IconFolder, "icon.png");
+
                 // Add the icon.png reference if it doesn't exist
                 var newIconElement = new XElement("None",
-                    new XAttribute("Include", "icon.png"),
+                    new XAttribute("Include", includeString),
                     new XAttribute("Pack", "true"),
                     new XAttribute("PackagePath", ""));
                 packableItemGroup.Add(newIconElement);
@@ -134,4 +143,6 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
         }
     }
 
+    [GeneratedRegex(@"^[^/\\\s]+$")]
+    private static partial Regex IsEmptyFolderNameRegex { get; }
 }

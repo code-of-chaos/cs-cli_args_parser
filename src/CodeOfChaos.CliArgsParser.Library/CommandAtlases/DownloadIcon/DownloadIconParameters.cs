@@ -25,7 +25,7 @@ public readonly partial struct DownloadIconParameters : IParameters {
     public string SourceFolder { get; init; } = "src";
 
     [CliArgsParameter("icon-folder", "if")] [CliArgsDescription("The folder where the icons are located")]
-    public string IconFolder { get; init; } = "assets";
+    public string IconFolder { get; init; } = "assets/";
 
     [CliArgsParameter("origin", "o")] [CliArgsDescription("The origin of the icon file")]
     public required string Origin { get; init; }

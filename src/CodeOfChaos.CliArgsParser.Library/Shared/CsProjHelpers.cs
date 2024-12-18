@@ -19,7 +19,8 @@ public static class CsProjHelpers {
             Indent = true,
             IndentChars = "    ",
             Async = true,
-            OmitXmlDeclaration = true
+            OmitXmlDeclaration = true,
+            NewLineOnAttributes = false // Keeps attributes on the same line
         };
         
         foreach (string path in projectPaths) {
@@ -27,6 +28,7 @@ public static class CsProjHelpers {
                 throw new FileNotFoundException($"Could not find project file {path}");
             }
 
+            // Load with PreserveWhitespace to retain empty lines
             XDocument document;
             await using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true)) {
                 document = await XDocument.LoadAsync(stream, LoadOptions.PreserveWhitespace, CancellationToken.None);
@@ -34,9 +36,10 @@ public static class CsProjHelpers {
             
             yield return document;
             
+            // Save using XmlWriter to apply consistent indentation, but preserve empty lines
             await using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) {
                 await using var writer = XmlWriter.Create(stream, settings);
-                document.Save(writer);
+                document.Save(writer); // Save while enforcing indentation
             }
         }
     }

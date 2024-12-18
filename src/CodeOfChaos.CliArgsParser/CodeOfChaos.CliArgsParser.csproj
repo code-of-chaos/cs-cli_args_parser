@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
         <IsPackable>true</IsPackable>
-        <PackageId>CodeOfChaos.CliArgsParser</PackageId> <!-- Main package name -->
-        <Version>3.0.3-preview.5</Version> <!-- Package version -->
+        
+        <!-- Main package name -->
+        <PackageId>CodeOfChaos.CliArgsParser</PackageId>
+        <Version>3.0.3-preview.5</Version>
         <Authors>Anna Sas</Authors>
         <Description>CliArgsParser is a library built around Dependency Injection to allow you to create CLI tools with ease</Description>
         <PackageProjectUrl>https://github.com/code-of-chaos/cs-code_of_chaos-cli_args_parser/</PackageProjectUrl>
@@ -20,11 +20,11 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
         <None Include="..\..\README.md" Pack="true" PackagePath="" />
-        <None Include="..\..\assets/icon.png" Pack="true" PackagePath="" />
+        <None Include="../../assets/icon.png" Pack="true" PackagePath="" />
     </ItemGroup>
-
+    
 </Project>
