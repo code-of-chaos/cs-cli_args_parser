@@ -4,15 +4,14 @@
 using AterraEngine.Unions;
 using CodeOfChaos.CliArgsParser.Attributes;
 using CodeOfChaos.CliArgsParser.Contracts;
-using System.Diagnostics;
-using System.Xml;
+using CodeOfChaos.CliArgsParser.Library.Shared;
 using System.Xml.Linq;
 
 namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.VersionBump;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-[CliArgsCommand("version-bump")]
+[CliArgsCommand("git-version-bump")]
 [CliArgsDescription("Bumps the version of the projects specified in the projects argument.")]
 public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
 
@@ -30,14 +29,14 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
         SemanticVersionDto updatedVersion = bumpResult.AsSuccess.Value;
 
         Console.WriteLine("Git committing ...");
-        SuccessOrFailure gitCommitResult = await TryCreateGitCommit(updatedVersion);
+        SuccessOrFailure gitCommitResult = await GitHelpers.TryCreateGitCommit(updatedVersion);
         if (gitCommitResult is { IsFailure: true, AsFailure.Value: var errorCommiting }) {
             Console.WriteLine(errorCommiting);
             return;
         }
 
         Console.WriteLine("Git tagging ...");
-        SuccessOrFailure gitTagResult = await TryCreateGitTag(updatedVersion);
+        SuccessOrFailure gitTagResult = await GitHelpers.TryCreateGitTag(updatedVersion);
         if (gitTagResult is { IsFailure: true, AsFailure.Value: var errorTagging }) {
             Console.WriteLine(errorTagging);
             return;
@@ -48,7 +47,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
         if (!parameters.PushToRemote) return;
 
         Console.WriteLine("Pushing to origin ...");
-        SuccessOrFailure pushResult = await TryPushToOrigin();
+        SuccessOrFailure pushResult = await GitHelpers.TryPushToOrigin();
         if (pushResult is { IsFailure: true, AsFailure.Value: var errorPushing }) {
             Console.WriteLine(errorPushing);
             return;
@@ -57,57 +56,9 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
         Console.WriteLine("Pushed to origin successfully.");
     }
 
-    private static async Task<SuccessOrFailure> TryPushToOrigin() {
-        var gitTagInfo = new ProcessStartInfo("git", "push origin --tags") {
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        using Process? gitTagProcess = Process.Start(gitTagInfo);
-        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
-        await gitTagProcess.WaitForExitAsync();
-
-        if (gitTagProcess.ExitCode != 0) return "Push to origin failed";
-
-        return new Success();
-    }
-
-    private static async Task<SuccessOrFailure> TryCreateGitTag(SemanticVersionDto updatedVersion) {
-        var gitTagInfo = new ProcessStartInfo("git", "tag v" + updatedVersion) {
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        using Process? gitTagProcess = Process.Start(gitTagInfo);
-        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
-        await gitTagProcess.WaitForExitAsync();
-
-        if (gitTagProcess.ExitCode != 0) return "Git Tagging failed";
-
-        return new Success();
-    }
-
-    private static async Task<SuccessOrFailure> TryCreateGitCommit(SemanticVersionDto updatedVersion) {
-        var gitCommitInfo = new ProcessStartInfo("git", $"commit -am \"VersionBump : v{updatedVersion}\"") {
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
-        using Process? gitCommitProcess = Process.Start(gitCommitInfo);
-        Console.WriteLine(await gitCommitProcess?.StandardOutput.ReadToEndAsync()!);
-        await gitCommitProcess.WaitForExitAsync();
-
-        if (gitCommitProcess.ExitCode != 0) return "Git Commit failed";
-
-        return new Success();
-    }
-
 
     private static async Task<SuccessOrFailure<SemanticVersionDto>> BumpVersion(VersionBumpParameters args) {
-        string[] projectFiles = args.GetProjects();
+        string[] projectFiles = CsProjHelpers.AsProjectPaths(args.Root, args.SourceFolder, args.GetProjects());
         if (projectFiles.Length == 0) {
             return new Failure<string>("No projects specified");
         }
@@ -115,29 +66,19 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
         VersionSection sectionToBump = args.Section;
         SemanticVersionDto? versionDto = null;
 
-        foreach (string projectFile in projectFiles) {
-            string path = Path.Combine(args.Root, args.SourceFolder, projectFile, projectFile + ".csproj");
-            if (!File.Exists(path)) {
-                return new Failure<string>($"Could not find project file {projectFile}");
-            }
-
-            XDocument document;
-            await using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true)) {
-                document = await XDocument.LoadAsync(stream, LoadOptions.PreserveWhitespace, CancellationToken.None);
-            }
-
+        await foreach (XDocument document in CsProjHelpers.GetProjectFiles(projectFiles)) {
             XElement? versionElement = document
                 .Descendants("PropertyGroup")
                 .Elements("Version")
                 .FirstOrDefault();
 
             if (versionElement == null) {
-                return new Failure<string>($"File {projectFile} did not contain a version element");
+                return new Failure<string>($"File did not contain a version element");
             }
 
             if (versionDto is null) {
                 if (!SemanticVersionDto.TryParse(versionElement.Value, out SemanticVersionDto? dto)) {
-                    return new Failure<string>($"File {projectFile} contained an invalid version element: {versionElement.Value}");
+                    return new Failure<string>($"File contained an invalid version element: {versionElement.Value}");
                 }
 
                 dto.BumpVersion(sectionToBump);
@@ -146,20 +87,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
             }
 
             versionElement.Value = versionDto.ToString();
-
-            var settings = new XmlWriterSettings {
-                Indent = true,
-                IndentChars = "    ",
-                Async = true,
-                OmitXmlDeclaration = true
-            };
-
-            await using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) {
-                await using var writer = XmlWriter.Create(stream, settings);
-                document.Save(writer);
-            }
-
-            Console.WriteLine($"Updated {projectFile} version to {versionElement.Value}");
+            Console.WriteLine($"Updated version to {versionElement.Value}");
         }
 
         return versionDto is not null

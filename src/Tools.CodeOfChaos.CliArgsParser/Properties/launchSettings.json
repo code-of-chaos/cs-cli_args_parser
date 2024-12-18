@@ -2,19 +2,24 @@
   "profiles": {
     "Major Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump --section=\"major\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"major\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
     },
     "Minor Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump --section=\"minor\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"minor\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
     },
     "Patch Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump --section=\"patch\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"patch\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
     },
     "Preview Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "version-bump --section=\"preview\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"preview\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+    },
+    
+    "Download Icon": {
+      "commandName": "Project",
+      "commandLineArgs": "nuget-download-icon --origin=\"https://avatars.githubusercontent.com/u/102103683?s=400&u=b0dc0cb37882f73ef59b0ed9fd11ee9de5213d0f&v=4\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
     }
   }
 }
