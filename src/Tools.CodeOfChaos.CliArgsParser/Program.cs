@@ -10,7 +10,7 @@ namespace Tools.CodeOfChaos.CliArgsParser;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class Program {
     public static async Task Main(string[] args) {
-        global::CodeOfChaos.CliArgsParser.CliArgsParser? parser = CliArgsBuilder.CreateFromConfig(
+        var parser = CliArgsBuilder.CreateFromConfig(
             config => {
                 config.AddCommandsFromAssemblyEntrypoint<IAssemblyEntry>();
             }
