@@ -2,8 +2,6 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using AterraEngine.Unions;
-using CodeOfChaos.CliArgsParser.Attributes;
-using CodeOfChaos.CliArgsParser.Contracts;
 using CodeOfChaos.CliArgsParser.Library.Shared;
 using System.Xml.Linq;
 

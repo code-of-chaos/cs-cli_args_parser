@@ -1,8 +1,6 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.CliArgsParser.Attributes;
-using CodeOfChaos.CliArgsParser.Contracts;
 using System;
 using System.Threading.Tasks;
 
