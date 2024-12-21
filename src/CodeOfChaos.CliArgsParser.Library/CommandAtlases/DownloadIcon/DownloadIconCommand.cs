@@ -107,6 +107,9 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
 
             // Placeholder for the final icon's path
             string destinationPath = Path.Combine(parameters.Root, parameters.IconFolder, "icon.png");
+            
+            // create all folders if needed for the destination path
+            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
 
             if (isUrl) {
                 // Download the file from URL using HttpClient
