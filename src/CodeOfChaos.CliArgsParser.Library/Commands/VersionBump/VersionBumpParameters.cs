@@ -17,6 +17,9 @@ public readonly partial struct VersionBumpParameters : IParameters {
     [CliArgsParameter("push", "p", ParameterType.Flag)] [CliArgsDescription("Push the changes to the remote repository")]
     public bool PushToRemote { get; init; } = false;
 
+    [CliArgsParameter("force", "f", ParameterType.Flag)] [CliArgsDescription("Automatically push the changes to the remote repository without user input")]
+    public bool Force { get; init; } = false;
+
     [CliArgsParameter("projects", "pr")] [CliArgsDescription("The projects to update")]
     public required string ProjectsStringValue { get; init; }
 

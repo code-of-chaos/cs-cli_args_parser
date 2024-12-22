@@ -44,6 +44,13 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
 
         if (!parameters.PushToRemote) return;
 
+        // Ask the user for extra input to make sure they want to push the current tag.
+        if (!parameters.Force) {
+            Console.WriteLine("Do you want to push to origin? (y/n)");
+            string? input = Console.ReadLine()?.ToLowerInvariant();
+            if (input is not "y") return;
+        }
+
         Console.WriteLine("Pushing to origin ...");
         SuccessOrFailure pushResult = await GitHelpers.TryPushToOrigin();
         if (pushResult is { IsFailure: true, AsFailure.Value: var errorPushing }) {

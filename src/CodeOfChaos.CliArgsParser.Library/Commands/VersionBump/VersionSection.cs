@@ -10,5 +10,6 @@ public enum VersionSection {
     Major,
     Minor,
     Patch,
-    Preview
+    Preview,
+    Manual
 }

@@ -67,6 +67,26 @@ public partial class SemanticVersionDto {
                 break;
             }
 
+            case VersionSection.Manual: {
+                // Ask the user for input
+                int tries = 0;
+                while (tries <= 5) {
+                    Console.WriteLine("Please enter the new version");
+                    string? input = Console.ReadLine();
+                    if (input is null || !TryParse(input, out SemanticVersionDto? newVersion)) {
+                        Console.WriteLine("Invalid input");
+                        tries++;
+                        continue;
+                    }
+                    Major = newVersion.Major;
+                    Minor = newVersion.Minor;
+                    Patch = newVersion.Patch;
+                    Preview = newVersion.Preview;
+                    break;
+                }
+                throw new Exception("Could not parse version after 5 tries.");
+            }
+
             // We don't care
             case VersionSection.None:
             default:

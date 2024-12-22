@@ -2,23 +2,28 @@
   "profiles": {
     "Major Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "git-version-bump --section=\"major\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"major\" --projects=\"%PROJECTS%\" --push"
     },
     "Minor Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "git-version-bump --section=\"minor\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"minor\" --projects=\"%PROJECTS%\" --push"
     },
     "Patch Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "git-version-bump --section=\"patch\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"patch\" --projects=\"%PROJECTS%\" --push"
     },
     "Preview Version Bump": {
       "commandName": "Project",
-      "commandLineArgs": "git-version-bump --section=\"preview\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\" --push"
+      "commandLineArgs": "git-version-bump --section=\"preview\" --projects=\"%PROJECTS%\" --push"
+    },
+    "Manual" : {
+      "_readme" : "useful for setting a preview for an upcoming version. Will ask for a prompt of the new version string",
+      "commandName": "Project",
+      "commandLineArgs": "git-version-bump --section=\"manual\" --projects=\"%PROJECTS%\" --push"
     },
     "Download Icon": {
       "commandName": "Project",
-      "commandLineArgs": "nuget-download-icon --origin=\"https://avatars.githubusercontent.com/u/102103683\" --projects=\"CodeOfChaos.CliArgsParser;CodeOfChaos.CliArgsParser.Library;CodeOfChaos.CliArgsParser.Generators;\""
+      "commandLineArgs": "nuget-download-icon --origin=\"https://avatars.githubusercontent.com/u/102103683\" --projects=\"%PROJECTS%\""
     }
   }
 }
