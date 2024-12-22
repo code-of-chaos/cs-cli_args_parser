@@ -44,6 +44,7 @@ public partial class SemanticVersionDto {
                 Major += 1;
                 Minor = 0;
                 Patch = 0;
+                Preview = null;
                 break;
             }
 
