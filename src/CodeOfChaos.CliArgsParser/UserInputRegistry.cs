@@ -12,7 +12,7 @@ public partial class UserInputRegistry : IUserInputRegistry {
     private uint _positionalCounter;
     private uint _quotedStringCounter;
 
-    [GeneratedRegex("""(?:(?<keyValue>(?<key>--\w+|-\w)\s*=\s*(?<value>"[^"]*"|[^ ]+)))|(?<flag>(?:--\w+|-\w)(?=\s|$))|(?<quotedString>"(?<quoted>[^"]*)")|(?<positional>\S+)""")]
+    [GeneratedRegex("""(?:(?<keyValue>(?<key>--[\w\-_]+|-[\w\-_])\s*=\s*(?<value>"[^"]*"|[^ ]+)))|(?<flag>(?:--[\w\-_]+|-[\w\-_])(?=\s|$))|(?<quotedString>"(?<quoted>[^"]*)")|(?<positional>\S+)""")]
     private static partial Regex GatherValuesRegex { get; }
 
     public void Dispose() {

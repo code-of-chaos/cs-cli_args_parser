@@ -278,4 +278,17 @@ public class UserInputRegistryTests {
         // Assert
         await Assert.That(flag).IsEqualTo(true);
     }
+
+    [Test]
+    public async Task Test_GetKeyValue_WithHyphen_ReturnsValue() {
+        // Arrange
+        var registry = new UserInputRegistry();
+        registry.IngestString("--key-value=\"value\"");
+
+        // Act
+        string? result = registry.GetOptionalParameter<string>("--key-value");
+
+        // Assert
+        await Assert.That(result).IsEqualTo("value");
+    }
 }
