@@ -27,7 +27,7 @@ public class ClassDto(ISymbol symbol, ClassDeclarationSyntax syntax) {
 
     private string CommandName =>
         _commandNameAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString()
-        ?? ClassName.Replace("Command", "").ToLowerInvariant(); // Maybe create a ToKebabCase method?
+        ?? ClassName.Replace("Command", "").ToLowerInvariant();// Maybe create a ToKebabCase method?
 
     private string Description => _descriptionAttribute?.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ?? string.Empty;
 

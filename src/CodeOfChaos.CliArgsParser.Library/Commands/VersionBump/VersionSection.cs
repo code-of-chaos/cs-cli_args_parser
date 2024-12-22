@@ -1,21 +1,14 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
-using CodeOfChaos.CliArgsParser;
-using CodeOfChaos.CliArgsParser.Library;
-
-namespace Tools.CodeOfChaos.CliArgsParser;
+namespace CodeOfChaos.CliArgsParser.Library.Commands.VersionBump;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
-public static class Program {
-    public static async Task Main(string[] args) {
-        global::CodeOfChaos.CliArgsParser.CliArgsParser parser = CliArgsBuilder.CreateFromConfig(
-            config => {
-                config.AddCommandsFromAssemblyEntrypoint<IAssemblyEntry>();
-            }
-        ).Build();
-
-        await parser.ParseAsync(args);
-    }
+public enum VersionSection {
+    None = 0,
+    Major,
+    Minor,
+    Patch,
+    Preview
 }

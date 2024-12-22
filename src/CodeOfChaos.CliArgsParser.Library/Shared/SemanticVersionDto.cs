@@ -1,10 +1,11 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.CliArgsParser.Library.Commands.VersionBump;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace CodeOfChaos.CliArgsParser.Library.CommandAtlases.VersionBump;
+namespace CodeOfChaos.CliArgsParser.Library.Shared;
 // ---------------------------------------------------------------------------------------------------------------------
 // Code
 // ---------------------------------------------------------------------------------------------------------------------

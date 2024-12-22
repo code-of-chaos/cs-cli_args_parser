@@ -91,6 +91,7 @@ public partial class CliArgsParser {
                     foreach (string commandName in CommandLookup.Keys) {
                         Console.WriteLine($" - {commandName}");
                     }
+
                     continue;
                 }
 

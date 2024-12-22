@@ -4,7 +4,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
-        
+
         <!-- Main package name -->
         <PackageId>CodeOfChaos.CliArgsParser</PackageId>
         <Version>3.0.3-preview.8</Version>
@@ -22,9 +22,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-        <None Include="..\..\README.md" Pack="true" PackagePath="" />
-        <None Include="../../assets/icon.png" Pack="true" PackagePath="" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+        <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+        <None Include="../../assets/icon.png" Pack="true" PackagePath=""/>
     </ItemGroup>
 
 </Project>

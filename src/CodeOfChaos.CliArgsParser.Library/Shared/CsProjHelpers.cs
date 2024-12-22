@@ -19,7 +19,7 @@ public static class CsProjHelpers {
             IndentChars = "    ",
             Async = true,
             OmitXmlDeclaration = true,
-            NewLineOnAttributes = false // Keeps attributes on the same line
+            NewLineOnAttributes = false// Keeps attributes on the same line
         };
 
         foreach (string path in projectPaths) {
@@ -38,7 +38,7 @@ public static class CsProjHelpers {
             // Save using XmlWriter to apply consistent indentation, but preserve empty lines
             await using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true)) {
                 await using var writer = XmlWriter.Create(stream, settings);
-                document.Save(writer); // Save while enforcing indentation
+                document.Save(writer);// Save while enforcing indentation
             }
         }
     }
