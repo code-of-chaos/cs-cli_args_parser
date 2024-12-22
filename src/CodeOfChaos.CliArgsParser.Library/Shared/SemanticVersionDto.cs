@@ -45,33 +45,33 @@ public partial class SemanticVersionDto {
                 Minor = 0;
                 Patch = 0;
                 Preview = null;
-                break;
+                return;
             }
 
             case VersionSection.Minor: {
                 Minor += 1;
                 Patch = 0;
                 Preview = null;
-                break;
+                return;
             }
 
             case VersionSection.Patch: {
                 Patch += 1;
                 Preview = null;
-                break;
+                return;
             }
 
             case VersionSection.Preview: {
                 Preview ??= 0;
                 Preview += 1;
-                break;
+                return;
             }
 
             case VersionSection.Manual: {
                 // Ask the user for input
                 int tries = 0;
                 while (tries <= 5) {
-                    Console.WriteLine("Please enter the new version");
+                    Console.WriteLine("Please enter a semantic version:");
                     string? input = Console.ReadLine();
                     if (input is null || !TryParse(input, out SemanticVersionDto? newVersion)) {
                         Console.WriteLine("Invalid input");
@@ -82,7 +82,7 @@ public partial class SemanticVersionDto {
                     Minor = newVersion.Minor;
                     Patch = newVersion.Patch;
                     Preview = newVersion.Preview;
-                    break;
+                    return;
                 }
                 throw new Exception("Could not parse version after 5 tries.");
             }
@@ -90,7 +90,7 @@ public partial class SemanticVersionDto {
             // We don't care
             case VersionSection.None:
             default:
-                break;
+                return;
         }
     }
 
