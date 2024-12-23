@@ -76,15 +76,21 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
                 .Descendants("PropertyGroup")
                 .Elements("Version")
                 .FirstOrDefault();
+            
+            // Only needed for logging, so setting to "UNKNOWN" is okay
+            string projectName = document
+                .Descendants("PropertyGroup")
+                .Elements("PackageId")
+                .FirstOrDefault()?
+                .Value ?? "UNKNOWN";
 
             if (versionElement == null) {
                 return new Failure<string>("File did not contain a version element");
             }
 
             if (versionDto is null) {
-                if (!SemanticVersionDto.TryParse(versionElement.Value, out SemanticVersionDto? dto)) {
+                if (!SemanticVersionDto.TryParse(versionElement.Value, out SemanticVersionDto? dto))
                     return new Failure<string>($"File contained an invalid version element: {versionElement.Value}");
-                }
 
                 dto.BumpVersion(sectionToBump);
 
@@ -92,7 +98,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
             }
 
             versionElement.Value = versionDto.ToString();
-            Console.WriteLine($"Updated version to {versionElement.Value}");
+            Console.WriteLine($"Updated version of package {projectName} to {versionElement.Value}");
         }
 
         return versionDto is not null
