@@ -76,7 +76,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
                 .Descendants("PropertyGroup")
                 .Elements("Version")
                 .FirstOrDefault();
-            
+
             // Only needed for logging, so setting to "UNKNOWN" is okay
             string projectName = document
                 .Descendants("PropertyGroup")

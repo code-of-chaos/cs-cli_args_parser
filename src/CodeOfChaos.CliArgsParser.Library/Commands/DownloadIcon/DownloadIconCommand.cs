@@ -82,6 +82,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
                     + (IsEmptyFolderNameRegex.IsMatch(args.SourceFolder) ? 1 : 0)
                     + args.SourceFolder.Count(c => c is '/' or '\\')
                 );
+
                 string includeString = Path.Combine(string.Join(string.Empty, indents), args.IconFolder, "icon.png");
 
                 // Add the icon.png reference if it doesn't exist
@@ -89,6 +90,7 @@ public partial class DownloadIconCommand : ICommand<DownloadIconParameters> {
                     new XAttribute("Include", includeString),
                     new XAttribute("Pack", "true"),
                     new XAttribute("PackagePath", ""));
+
                 packableItemGroup.Add(newIconElement);
             }
         }

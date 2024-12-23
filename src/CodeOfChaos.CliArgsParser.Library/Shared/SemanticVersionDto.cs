@@ -78,12 +78,14 @@ public partial class SemanticVersionDto {
                         tries++;
                         continue;
                     }
+
                     Major = newVersion.Major;
                     Minor = newVersion.Minor;
                     Patch = newVersion.Patch;
                     Preview = newVersion.Preview;
                     return;
                 }
+
                 throw new Exception("Could not parse version after 5 tries.");
             }
 
