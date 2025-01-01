@@ -57,6 +57,12 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
             Console.WriteLine(errorPushing);
             return;
         }
+        
+        SuccessOrFailure pushTagsResult = await GitHelpers.TryPushTagsToOrigin();
+        if (pushTagsResult is { IsFailure: true, AsFailure.Value: var errorPushingTags }) {
+            Console.WriteLine(errorPushingTags);
+            return;
+        }
 
         Console.WriteLine("Pushed to origin successfully.");
     }

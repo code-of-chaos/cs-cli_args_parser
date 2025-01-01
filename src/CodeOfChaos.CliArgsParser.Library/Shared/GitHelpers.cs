@@ -24,6 +24,24 @@ public static class GitHelpers {
 
         return new Success();
     }
+    
+    
+    public static async Task<SuccessOrFailure> TryPushTagsToOrigin() {
+        var gitTagInfo = new ProcessStartInfo("git", "push origin --tags") {
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+
+        using Process? gitTagProcess = Process.Start(gitTagInfo);
+        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+        await gitTagProcess.WaitForExitAsync();
+
+        if (gitTagProcess.ExitCode != 0) return "Pushing Tags to origin failed";
+
+        return new Success();
+    }
+    
 
     public static async Task<SuccessOrFailure> TryCreateGitTag(SemanticVersionDto updatedVersion) {
         var gitTagInfo = new ProcessStartInfo("git", "tag v" + updatedVersion) {
