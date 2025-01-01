@@ -10,7 +10,7 @@ namespace CodeOfChaos.CliArgsParser.Library.Shared;
 // ---------------------------------------------------------------------------------------------------------------------
 public static class GitHelpers {
     public static async Task<SuccessOrFailure> TryPushToOrigin() {
-        var gitTagInfo = new ProcessStartInfo("git", "push origin --tags") {
+        var gitTagInfo = new ProcessStartInfo("git", "push origin") {
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true
