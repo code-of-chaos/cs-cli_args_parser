@@ -19,7 +19,7 @@ public static class CsProjHelpers {
             IndentChars = "    ",
             Async = true,
             OmitXmlDeclaration = true,
-            NewLineOnAttributes = false// Keeps attributes on the same line
+            NewLineOnAttributes = false // Keeps attributes on the same line
         };
 
         foreach (string path in projectPaths) {
