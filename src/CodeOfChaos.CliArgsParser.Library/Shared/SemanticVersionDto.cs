@@ -61,32 +61,29 @@ public partial class SemanticVersionDto {
                 return;
             }
 
+            case VersionSection.Preview when Preview is null: {
+                SemanticVersionDto newVersion = FromInput("Please enter a semantic version for the new preview version:");
+                
+                Major = newVersion.Major;
+                Minor = newVersion.Minor;
+                Patch = newVersion.Patch;
+                Preview = newVersion.Preview ?? 0 ;
+                return;
+            }
+
             case VersionSection.Preview: {
-                Preview ??= 0;
                 Preview += 1;
                 return;
             }
 
             case VersionSection.Manual: {
-                // Ask the user for input
-                int tries = 0;
-                while (tries <= 5) {
-                    Console.WriteLine("Please enter a semantic version:");
-                    string? input = Console.ReadLine();
-                    if (input is null || !TryParse(input, out SemanticVersionDto? newVersion)) {
-                        Console.WriteLine("Invalid input");
-                        tries++;
-                        continue;
-                    }
-
-                    Major = newVersion.Major;
-                    Minor = newVersion.Minor;
-                    Patch = newVersion.Patch;
-                    Preview = newVersion.Preview;
-                    return;
-                }
-
-                throw new Exception("Could not parse version after 5 tries.");
+                SemanticVersionDto newVersion = FromInput();
+                
+                Major = newVersion.Major;
+                Minor = newVersion.Minor;
+                Patch = newVersion.Patch;
+                Preview = newVersion.Preview;
+                return;
             }
 
             // We don't care
@@ -99,4 +96,18 @@ public partial class SemanticVersionDto {
     public override string ToString() => Preview is not null
         ? $"{Major}.{Minor}.{Patch}-preview.{Preview}"
         : $"{Major}.{Minor}.{Patch}";
+
+    private static SemanticVersionDto FromInput(string inputText = "Please enter a semantic version:") {
+        int tries = 0;
+        while (tries <= 5) {
+            Console.WriteLine(inputText);
+            string? input = Console.ReadLine();
+            if (input is not null && TryParse(input, out SemanticVersionDto? newVersion)) return newVersion;
+
+            Console.WriteLine("Invalid input");
+            tries++;
+        }
+
+        throw new Exception("Could not parse version after 5 tries.");
+    }
 }
