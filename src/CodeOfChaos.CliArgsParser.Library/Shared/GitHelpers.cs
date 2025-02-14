@@ -2,6 +2,7 @@
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
 using AterraEngine.Unions;
+using CodeOfChaos.Ansi;
 using System.Diagnostics;
 
 namespace CodeOfChaos.CliArgsParser.Library.Shared;
@@ -15,9 +16,13 @@ public static class GitHelpers {
             UseShellExecute = false,
             CreateNoWindow = true
         };
+        var builder = new AnsiStringBuilder();
 
         using Process? gitTagProcess = Process.Start(gitTagInfo);
-        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+
+        builder.Fore.AppendWhitesmokeLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+        Console.WriteLine(builder.ToStringAndClear());
+        
         await gitTagProcess.WaitForExitAsync();
 
         if (gitTagProcess.ExitCode != 0) return "Push to origin failed";
@@ -32,9 +37,13 @@ public static class GitHelpers {
             UseShellExecute = false,
             CreateNoWindow = true
         };
+        var builder = new AnsiStringBuilder();
 
         using Process? gitTagProcess = Process.Start(gitTagInfo);
-        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+
+        builder.Fore.AppendWhitesmokeLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+        Console.WriteLine(builder.ToStringAndClear());
+        
         await gitTagProcess.WaitForExitAsync();
 
         if (gitTagProcess.ExitCode != 0) return "Pushing Tags to origin failed";
@@ -49,9 +58,13 @@ public static class GitHelpers {
             UseShellExecute = false,
             CreateNoWindow = true
         };
+        var builder = new AnsiStringBuilder();
 
         using Process? gitTagProcess = Process.Start(gitTagInfo);
-        Console.WriteLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+
+        builder.Fore.AppendWhitesmokeLine(await gitTagProcess?.StandardOutput.ReadToEndAsync()!);
+        Console.WriteLine(builder.ToStringAndClear());
+        
         await gitTagProcess.WaitForExitAsync();
 
         if (gitTagProcess.ExitCode != 0) return "Git Tagging failed";
@@ -65,9 +78,13 @@ public static class GitHelpers {
             UseShellExecute = false,
             CreateNoWindow = true
         };
+        var builder = new AnsiStringBuilder();
 
         using Process? gitCommitProcess = Process.Start(gitCommitInfo);
-        Console.WriteLine(await gitCommitProcess?.StandardOutput.ReadToEndAsync()!);
+
+        builder.Fore.AppendWhitesmokeLine(await gitCommitProcess?.StandardOutput.ReadToEndAsync()!);
+        Console.WriteLine(builder.ToStringAndClear());
+        
         await gitCommitProcess.WaitForExitAsync();
 
         if (gitCommitProcess.ExitCode != 0) return "Git Commit failed";

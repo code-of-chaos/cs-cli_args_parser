@@ -17,54 +17,60 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
     // Methods
     // -----------------------------------------------------------------------------------------------------------------
     public async Task ExecuteAsync(VersionBumpParameters parameters) {
-        Console.WriteLine("Bumping version...");
+        Console.WriteLine(ConsoleTextStore.BumpingVersion);
         SuccessOrFailure<SemanticVersionDto> bumpResult = await BumpVersion(parameters);
         if (bumpResult is { IsFailure: true, AsFailure.Value: var errorBumping }) {
-            Console.WriteLine(errorBumping);
+            Console.WriteLine(ConsoleTextStore.CommandEndFailure(errorBumping));
             return;
         }
 
         SemanticVersionDto updatedVersion = bumpResult.AsSuccess.Value;
 
-        Console.WriteLine("Git committing ...");
+        Console.WriteLine(ConsoleTextStore.GitCommitting);
         SuccessOrFailure gitCommitResult = await GitHelpers.TryCreateGitCommit(updatedVersion);
         if (gitCommitResult is { IsFailure: true, AsFailure.Value: var errorCommiting }) {
-            Console.WriteLine(errorCommiting);
+            Console.WriteLine(ConsoleTextStore.CommandEndFailure(errorCommiting));
             return;
         }
-
-        Console.WriteLine("Git tagging ...");
-        SuccessOrFailure gitTagResult = await GitHelpers.TryCreateGitTag(updatedVersion);
-        if (gitTagResult is { IsFailure: true, AsFailure.Value: var errorTagging }) {
-            Console.WriteLine(errorTagging);
-            return;
-        }
-
-        Console.WriteLine($"Version {updatedVersion} committed and tagged successfully.");
-
-        if (!parameters.PushToRemote) return;
-
+        
         // Ask the user for extra input to make sure they want to push the current tag.
         if (!parameters.Force) {
-            Console.WriteLine("Do you want to push to origin? (y/n)");
+            Console.WriteLine(ConsoleTextStore.QuestionTagAndCommit);
             string? input = Console.ReadLine()?.ToLowerInvariant();
-            if (input is not "y") return;
+            if (input is not "y") {
+                Console.WriteLine(ConsoleTextStore.CommandEndSuccess());
+                return;
+            }
         }
 
-        Console.WriteLine("Pushing to origin ...");
+        Console.WriteLine(ConsoleTextStore.GitTagging);
+        SuccessOrFailure gitTagResult = await GitHelpers.TryCreateGitTag(updatedVersion);
+        if (gitTagResult is { IsFailure: true, AsFailure.Value: var errorTagging }) {
+            Console.WriteLine(ConsoleTextStore.CommandEndFailure(errorTagging));
+            return;
+        }
+
+        Console.WriteLine(ConsoleTextStore.TagSuccessful(updatedVersion));
+
+        if (!parameters.PushToRemote) {
+            Console.WriteLine(ConsoleTextStore.CommandEndSuccess());
+            return;
+        }
+
+        Console.WriteLine(ConsoleTextStore.GitPushingToRemote);
         SuccessOrFailure pushResult = await GitHelpers.TryPushToOrigin();
         if (pushResult is { IsFailure: true, AsFailure.Value: var errorPushing }) {
-            Console.WriteLine(errorPushing);
+            Console.WriteLine(ConsoleTextStore.CommandEndFailure(errorPushing));
             return;
         }
         
         SuccessOrFailure pushTagsResult = await GitHelpers.TryPushTagsToOrigin();
         if (pushTagsResult is { IsFailure: true, AsFailure.Value: var errorPushingTags }) {
-            Console.WriteLine(errorPushingTags);
+            Console.WriteLine(ConsoleTextStore.CommandEndFailure(errorPushingTags));
             return;
         }
 
-        Console.WriteLine("Pushed to origin successfully.");
+        Console.WriteLine(ConsoleTextStore.CommandEndSuccess());
     }
 
 
@@ -104,7 +110,7 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
             }
 
             versionElement.Value = versionDto.ToString();
-            Console.WriteLine($"Updated version of package {projectName} to {versionElement.Value}");
+            Console.WriteLine(ConsoleTextStore.UpdatedVersion(projectName, versionElement.Value));
         }
 
         return versionDto is not null

@@ -1,6 +1,7 @@
 ﻿// ---------------------------------------------------------------------------------------------------------------------
 // Imports
 // ---------------------------------------------------------------------------------------------------------------------
+using CodeOfChaos.Ansi;
 using CodeOfChaos.CliArgsParser.Library.Commands.VersionBump;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
@@ -99,12 +100,13 @@ public partial class SemanticVersionDto {
 
     private static SemanticVersionDto FromInput(string inputText = "Please enter a semantic version:") {
         int tries = 0;
+        var builder = new AnsiStringBuilder();
         while (tries <= 5) {
-            Console.WriteLine(inputText);
+            Console.WriteLine(builder.Fore.AppendWhitesmoke(inputText).ToStringAndClear());
             string? input = Console.ReadLine();
             if (input is not null && TryParse(input, out SemanticVersionDto? newVersion)) return newVersion;
 
-            Console.WriteLine("Invalid input");
+            Console.WriteLine(builder.Fore.AppendDarkorange("Invalid input").ToStringAndClear());
             tries++;
         }
 

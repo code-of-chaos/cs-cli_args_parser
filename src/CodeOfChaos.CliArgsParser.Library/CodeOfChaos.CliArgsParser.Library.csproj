@@ -35,5 +35,6 @@
 
     <ItemGroup>
         <PackageReference Include="AterraEngine.Unions" Version="3.9.0" />
+        <PackageReference Include="CodeOfChaos.Ansi" Version="1.0.0" />
     </ItemGroup>
 </Project>
