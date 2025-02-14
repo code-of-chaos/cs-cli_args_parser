@@ -9,8 +9,8 @@ namespace CodeOfChaos.CliArgsParser.Library.Shared;
 // Code
 // ---------------------------------------------------------------------------------------------------------------------
 public static class CsProjHelpers {
-    public static string[] AsProjectPaths(string root, string sourcefolder, string[] projectNames) {
-        return projectNames.Select(x => Path.Combine(root, sourcefolder, x, x + ".csproj")).ToArray();
+    public static string[] AsProjectPaths(string root, string sourceFolder, string[] projectNames) {
+        return projectNames.Select(x => Path.Combine(root, sourceFolder, x, x + ".csproj")).ToArray();
     }
 
     public static async IAsyncEnumerable<XDocument> GetProjectFiles(string[] projectPaths) {

@@ -11,7 +11,7 @@
 
         <!-- Main package name -->
         <PackageId>CodeOfChaos.CliArgsParser.Generators</PackageId>
-        <Version>4.5.0</Version>
+        <Version>4.6.0</Version>
         <Authors>Anna Sas</Authors>
         <Description>CliArgsParser is a library built around Dependency Injection to allow you to create CLI tools with ease</Description>
         <PackageProjectUrl>https://github.com/code-of-chaos/cs-code_of_chaos-cli_args_parser/</PackageProjectUrl>

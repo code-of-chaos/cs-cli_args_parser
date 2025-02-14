@@ -25,22 +25,22 @@ public partial class VersionBumpCommand : ICommand<VersionBumpParameters> {
         }
 
         SemanticVersionDto updatedVersion = bumpResult.AsSuccess.Value;
+        
+        // Ask the user for extra input to make sure they want to commit and the current tag.
+        if (!parameters.Force) {
+            Console.WriteLine(ConsoleTextStore.QuestionTagAndCommit);
+            char? input = Console.ReadLine()?.ToLowerInvariant().FirstOrDefault();
+            if (input is not 'y') {
+                Console.WriteLine(ConsoleTextStore.CommandEndSuccess());
+                return;
+            }
+        }
 
         Console.WriteLine(ConsoleTextStore.GitCommitting);
         SuccessOrFailure gitCommitResult = await GitHelpers.TryCreateGitCommit(updatedVersion);
         if (gitCommitResult is { IsFailure: true, AsFailure.Value: var errorCommiting }) {
             Console.WriteLine(ConsoleTextStore.CommandEndFailure(errorCommiting));
             return;
-        }
-        
-        // Ask the user for extra input to make sure they want to push the current tag.
-        if (!parameters.Force) {
-            Console.WriteLine(ConsoleTextStore.QuestionTagAndCommit);
-            string? input = Console.ReadLine()?.ToLowerInvariant();
-            if (input is not "y") {
-                Console.WriteLine(ConsoleTextStore.CommandEndSuccess());
-                return;
-            }
         }
 
         Console.WriteLine(ConsoleTextStore.GitTagging);

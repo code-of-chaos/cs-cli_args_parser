@@ -21,6 +21,7 @@ public static class Program {
         // We are doing this here because else the launchSettings.json file becomes a humongous issue to deal with.
         //      Sometimes CLI params is not the answer.
         //      Code is the true saviour
+        // const string projects = "";
         string projects = string.Join(";",
             "CodeOfChaos.CliArgsParser",
             "CodeOfChaos.CliArgsParser.Generators",
